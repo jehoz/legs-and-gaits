@@ -11,9 +11,10 @@ config_version=5
 [application]
 
 config/name="procedural-creatures"
+run/main_scene="res://scenes/default.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
 [dotnet]
 
-project/assembly_name="ProceduralMovement"
+project/assembly_name="procedural-creatures"

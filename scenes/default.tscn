@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://coip7ho7vu6cf"]
+
+[ext_resource type="PackedScene" uid="uid://ea6ychu6ebkn" path="res://scenes/creature.tscn" id="1_ubie8"]
+
+[node name="Default" type="Node3D"]
+
+[node name="Creature" parent="." instance=ExtResource("1_ubie8")]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.717929, -0.25, 0.649675, -0.000735006, 0.933013, 0.359843, -0.696116, -0.258819, 0.669653, 7.47253, 3.86136, 7.33479)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.46002, 0)
