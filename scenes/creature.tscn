@@ -10,7 +10,6 @@ script = ExtResource("1_4p6pk")
 
 [node name="BodySegment" type="Node3D" parent="."]
 script = ExtResource("2_6dagn")
-radius = null
 
 [node name="Leg L" type="Node3D" parent="BodySegment"]
 script = ExtResource("2_e051i")

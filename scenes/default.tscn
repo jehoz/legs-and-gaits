@@ -1,13 +1,20 @@
-[gd_scene load_steps=2 format=3 uid="uid://coip7ho7vu6cf"]
+[gd_scene load_steps=3 format=3 uid="uid://coip7ho7vu6cf"]
 
 [ext_resource type="PackedScene" uid="uid://ea6ychu6ebkn" path="res://scenes/creature.tscn" id="1_ubie8"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_kebb5"]
+size = Vector2(10, 10)
+orientation = 1
 
 [node name="Default" type="Node3D"]
 
 [node name="Creature" parent="." instance=ExtResource("1_ubie8")]
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 1.5)
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.46002, 0)
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+mesh = SubResource("QuadMesh_kebb5")
