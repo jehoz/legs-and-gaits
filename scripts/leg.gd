@@ -50,3 +50,6 @@ func make_segment(segment_length: float):
 	mesh.position.y = -(segment_length/2)
 	
 	return segment
+
+func max_length():
+	return femur_length + tibia_length + metatarsal_length * cos(ankle_rise)
