@@ -1,10 +1,10 @@
 class_name Leg extends Node3D
 
-@export var femur_length: float = 0.37
-@export var tibia_length: float = 0.57
-@export var metatarsal_length: float = 0.21
-@export var toe_length: float = 0.06
-@export var ankle_rise: float = 1.5
+@export var femur_length: float = 0.5
+@export var tibia_length: float = 0.45
+@export var metatarsal_length: float = 0.3
+@export var toe_length: float = 0.2
+@export var heel_elevation: float = 0.8
 
 enum LegType {LEG_FRONT, LEG_BACK}
 @export var leg_type: LegType = LegType.LEG_BACK
@@ -19,6 +19,10 @@ var toe: Node3D = null
 
 func _enter_tree():
 	regenerate_segments()
+
+func _process(delta):
+	move_foot_target()
+	solve_ik()
 
 func regenerate_segments():
 	if femur != null:
@@ -52,4 +56,61 @@ func make_segment(segment_length: float):
 	return segment
 
 func max_length():
-	return femur_length + tibia_length + metatarsal_length * cos(ankle_rise)
+	return femur_length + tibia_length + metatarsal_length * cos(heel_elevation)
+
+func move_foot_target():
+	var step_height = max_length() * 0.125
+	var step_distance = step_height * 2.0
+	var forward = -get_global_transform().basis.z
+	
+	foot_target.global_position = global_position + forward * oscillator.skewed(0.5) * step_distance
+	foot_target.global_position.y = max(0, oscillator.asymmetric(-1.0, PI/2)) * step_height
+
+func solve_ik():
+	var forward = -get_global_transform().basis.z
+	# position of joint between toe and metatarsal is offset from foot target
+	# depending on how high the heel is raised
+	# for fully plantigrade feet the target is the heel of the foot, for fully
+	# ungiligrade feet the target is the ball of the foot
+	var elev_percent = clamp(1.0 - (heel_elevation / (PI/2)), 0.0, 1.0)
+	var ball_offset = elev_percent * (cos(heel_elevation) * metatarsal_length) * forward
+	var ball_pos = foot_target.global_position + ball_offset
+	
+	# foot rotates slightly as the leg moves forward and backward, modifying the
+	# final angle of heel elevation and the toe bone
+	var hip_to_ball = ball_pos - global_position # hip is leg's origin
+	var leg_xz = Vector2(hip_to_ball.x, hip_to_ball.z)
+	var fw_xz = Vector2(forward.x, forward.z)
+	var xz_len = leg_xz.length() * sign(fw_xz.dot(leg_xz))
+	var delta_angle = atan2(xz_len, hip_to_ball.y)
+	var _heel_elevation = heel_elevation # + delta_angle
+	var toe_pos = ball_pos + (forward * toe_length)
+	
+	# ankle position is computed from ball position and heel elevation
+	var a_off_xz = metatarsal_length * cos(_heel_elevation) * (-forward)
+	var ankle_offset = Vector3(a_off_xz.x, metatarsal_length * sin(_heel_elevation), a_off_xz.z)
+	var ankle_pos = ball_pos + ankle_offset
+	
+	# law of cosines to find hip joint angle
+	var l = global_position.distance_to(ankle_pos)
+	var gamma = 0
+	if l < femur_length + tibia_length:
+		var n = pow(l, 2) + pow(femur_length, 2) - pow(tibia_length, 2)
+		var d = 2 * l * femur_length
+		gamma = acos(n / d)
+	
+	var knee_offset = (ankle_pos - global_position).normalized() * femur_length
+	var knee_pos = global_position + Quaternion(get_global_transform().basis.x, gamma) * knee_offset
+	
+	var prev = get_global_transform()
+	var bones = [femur, tibia, metatarsal, toe]
+	var joints = [knee_pos, ankle_pos, ball_pos, toe_pos]
+	for i in range(4):
+		var bone = bones[i]
+		var joint_pos = joints[i]
+		var from = -prev.basis.y
+		var to = (joint_pos - prev.origin).normalized()
+		var rot_quat = Quaternion(from, to)
+		bone.rotation = rot_quat.get_euler()
+		prev = bone.get_global_transform()
+		prev.origin = joint_pos

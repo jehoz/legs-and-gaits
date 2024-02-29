@@ -9,7 +9,7 @@ var resting_height: float = 0
 
 func _ready():
 	if leg_l != null:
-		resting_height = leg_l.max_length()
+		resting_height = leg_l.max_length() * 0.75
 		leg_l.position.x = -radius
 	
 	if leg_r != null:
