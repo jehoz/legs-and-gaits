@@ -68,6 +68,7 @@ func move_foot_target():
 
 func solve_ik():
 	var forward = -get_global_transform().basis.z
+	var left = get_global_transform().basis.x
 	# position of joint between toe and metatarsal is offset from foot target
 	# depending on how high the heel is raised
 	# for fully plantigrade feet the target is the heel of the foot, for fully
@@ -82,12 +83,12 @@ func solve_ik():
 	var leg_xz = Vector2(hip_to_ball.x, hip_to_ball.z)
 	var fw_xz = Vector2(forward.x, forward.z)
 	var xz_len = leg_xz.length() * sign(fw_xz.dot(leg_xz))
-	var delta_angle = atan2(xz_len, hip_to_ball.y)
-	var _heel_elevation = heel_elevation # + delta_angle
-	var toe_pos = ball_pos + (forward * toe_length)
+	var delta_angle = atan(xz_len / hip_to_ball.y)
+	var _heel_elevation = heel_elevation + delta_angle
+	var toe_pos = ball_pos + (Quaternion(left, -min(0, delta_angle)) * forward * toe_length)
 	
 	# ankle position is computed from ball position and heel elevation
-	var a_off_xz = metatarsal_length * cos(_heel_elevation) * (-forward)
+	var a_off_xz = metatarsal_length * cos(_heel_elevation) * -forward
 	var ankle_offset = Vector3(a_off_xz.x, metatarsal_length * sin(_heel_elevation), a_off_xz.z)
 	var ankle_pos = ball_pos + ankle_offset
 	
@@ -100,7 +101,7 @@ func solve_ik():
 		gamma = acos(n / d)
 	
 	var knee_offset = (ankle_pos - global_position).normalized() * femur_length
-	var knee_pos = global_position + Quaternion(get_global_transform().basis.x, gamma) * knee_offset
+	var knee_pos = global_position + Quaternion(left, gamma) * knee_offset
 	
 	var prev = get_global_transform()
 	var bones = [femur, tibia, metatarsal, toe]
