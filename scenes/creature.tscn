@@ -28,3 +28,4 @@ script = ExtResource("2_e051i")
 [node name="Oscillator" type="Node" parent="BodySegment/Leg R"]
 script = ExtResource("1_2a3ub")
 frequency = 2.0
+phase = 3.142
