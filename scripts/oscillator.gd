@@ -4,7 +4,11 @@ class_name Oscillator extends Node
 @export var phase : float = 0.0
 
 var elapsed_seconds : float = 0.0
-	
+
+func _init(frequency: float = 1.0, phase_offset: float = 0):
+	self.frequency = frequency
+	self.phase = phase_offset
+
 func _process(delta):
 	elapsed_seconds += delta
 

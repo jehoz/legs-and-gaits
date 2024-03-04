@@ -1,6 +1,27 @@
-[gd_scene load_steps=3 format=3 uid="uid://coip7ho7vu6cf"]
+[gd_scene load_steps=9 format=3 uid="uid://coip7ho7vu6cf"]
 
-[ext_resource type="PackedScene" uid="uid://ea6ychu6ebkn" path="res://scenes/creature.tscn" id="1_ubie8"]
+[ext_resource type="Script" path="res://scripts/creature.gd" id="1_e1xh8"]
+[ext_resource type="Script" path="res://scripts/blueprint/leg_blueprint.gd" id="2_sau8g"]
+[ext_resource type="Script" path="res://scripts/blueprint/body_segment_blueprint.gd" id="3_yjyq1"]
+[ext_resource type="Script" path="res://scripts/blueprint/creature_blueprint.gd" id="4_kntse"]
+
+[sub_resource type="Resource" id="Resource_4swe1"]
+script = ExtResource("2_sau8g")
+femur_length = 0.5
+tibia_length = 0.45
+metatarsal_length = 0.3
+toe_length = 0.2
+heel_elevation = 0.8
+
+[sub_resource type="Resource" id="Resource_7xwdi"]
+script = ExtResource("3_yjyq1")
+radius = 0.2
+leg_blueprint = SubResource("Resource_4swe1")
+leg_phase_offset = 0
+
+[sub_resource type="Resource" id="Resource_0glcd"]
+script = ExtResource("4_kntse")
+body_segments = Array[ExtResource("3_yjyq1")]([SubResource("Resource_7xwdi")])
 
 [sub_resource type="QuadMesh" id="QuadMesh_kebb5"]
 size = Vector2(10, 10)
@@ -8,7 +29,9 @@ orientation = 1
 
 [node name="Default" type="Node3D"]
 
-[node name="Creature" parent="." instance=ExtResource("1_ubie8")]
+[node name="Creature" type="Node3D" parent="."]
+script = ExtResource("1_e1xh8")
+blueprint = SubResource("Resource_0glcd")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 1, 0.5, -1)

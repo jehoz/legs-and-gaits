@@ -1,5 +1,7 @@
 class_name Leg extends Node3D
 
+const min_length: float = 0.0001
+
 @export var femur_length: float = 0.5
 @export var tibia_length: float = 0.45
 @export var metatarsal_length: float = 0.3
@@ -9,18 +11,37 @@ class_name Leg extends Node3D
 enum LegType {LEG_FRONT, LEG_BACK}
 @export var leg_type: LegType = LegType.LEG_BACK
 
-@onready var foot_target: Node3D = $FootTarget
-@onready var oscillator: Oscillator = $Oscillator
+var foot_target: Node3D = null
+var oscillator: Oscillator = null
 
 var femur: Node3D = null
 var tibia: Node3D = null
 var metatarsal: Node3D = null
 var toe: Node3D = null
 
+func _init(blueprint: LegBlueprint, phase_offset: float):
+	# copy values from blueprint
+	femur_length = blueprint.femur_length
+	tibia_length = blueprint.tibia_length
+	metatarsal_length = blueprint.metatarsal_length
+	toe_length = blueprint.toe_length
+	heel_elevation = blueprint.heel_elevation
+	
+	if oscillator == null:
+		oscillator = Oscillator.new(1.0, phase_offset)
+		oscillator.name = "Oscillator"
+		add_child(oscillator)
+	if foot_target == null:
+		foot_target = Node3D.new()
+		foot_target.name = "FootTarget"
+		add_child(foot_target)
+
 func _enter_tree():
 	regenerate_segments()
 
 func _process(delta):
+	update_segment_lengths()
+	
 	move_foot_target()
 	solve_ik()
 
@@ -51,9 +72,24 @@ func make_segment(segment_length: float):
 	
 	var segment = Node3D.new()
 	segment.add_child(mesh)
+	mesh.name = "Mesh"
 	mesh.position.y = -(segment_length/2)
 	
 	return segment
+
+func update_segment_lengths():
+	update_segment(femur, femur_length, 0)
+	update_segment(tibia, tibia_length, femur_length)
+	update_segment(metatarsal, metatarsal_length, tibia_length)
+	update_segment(toe, toe_length, metatarsal_length)
+
+func update_segment(segment, segment_length, parent_length):
+	segment.rotation
+	var mesh = segment.get_node("Mesh")
+	mesh.mesh.height = max(min_length, segment_length)
+	mesh.mesh.radius = 0.015
+	mesh.position.y = -(segment_length/2)
+	segment.position.y = -parent_length
 
 func max_length():
 	return femur_length + tibia_length + metatarsal_length * cos(heel_elevation)
