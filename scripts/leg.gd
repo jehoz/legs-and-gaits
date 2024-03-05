@@ -8,8 +8,7 @@ const min_length: float = 0.0001
 @export var toe_length: float = 0.2
 @export var heel_elevation: float = 0.8
 
-enum LegType {LEG_FRONT, LEG_BACK}
-@export var leg_type: LegType = LegType.LEG_BACK
+@export var leg_type: LegBlueprint.LegType = LegBlueprint.LegType.LEG_BACK
 
 var foot_target: Node3D = null
 var oscillator: Oscillator = null
@@ -19,7 +18,7 @@ var tibia: Node3D = null
 var metatarsal: Node3D = null
 var toe: Node3D = null
 
-func _init(blueprint: LegBlueprint, phase_offset: float):
+func _init(blueprint: LegBlueprint, phase_offset: float = 0):
 	# copy values from blueprint
 	femur_length = blueprint.femur_length
 	tibia_length = blueprint.tibia_length
@@ -28,7 +27,7 @@ func _init(blueprint: LegBlueprint, phase_offset: float):
 	heel_elevation = blueprint.heel_elevation
 	
 	if oscillator == null:
-		oscillator = Oscillator.new(1.0, phase_offset)
+		oscillator = Oscillator.new(blueprint._speed, blueprint._phase_offset + phase_offset)
 		oscillator.name = "Oscillator"
 		add_child(oscillator)
 	if foot_target == null:

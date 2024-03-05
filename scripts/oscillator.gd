@@ -5,8 +5,8 @@ class_name Oscillator extends Node
 
 var elapsed_seconds : float = 0.0
 
-func _init(frequency: float = 1.0, phase_offset: float = 0):
-	self.frequency = frequency
+func _init(freq: float = 1.0, phase_offset: float = 0):
+	self.frequency = freq
 	self.phase = phase_offset
 
 func _process(delta):

@@ -2,4 +2,7 @@ class_name BodySegmentBlueprint extends Resource
 
 @export var radius: float = 0.2
 @export var leg_blueprint: LegBlueprint = null
-@export var leg_phase_offset = 0
+
+# populated by parent blueprint
+var _speed: float = 1.0
+var _phase_offset: float = 0
