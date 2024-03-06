@@ -101,6 +101,9 @@ func move_foot_target():
 	foot_target.global_position = global_position + forward * oscillator.skewed(0.5) * step_distance
 	foot_target.global_position.y = max(0, oscillator.asymmetric(-1.0, PI/2)) * step_height
 
+func is_load_phase():
+	return foot_target.global_position.y <= 0 and foot_target.position.z > 0
+
 func solve_ik():
 	var forward = -get_global_transform().basis.z
 	var left = get_global_transform().basis.x
