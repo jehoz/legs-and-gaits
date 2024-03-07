@@ -77,18 +77,16 @@ func make_segment(segment_length: float):
 	return segment
 
 func update_segment_lengths():
-	update_segment(femur, femur_length, 0)
-	update_segment(tibia, tibia_length, femur_length)
-	update_segment(metatarsal, metatarsal_length, tibia_length)
-	update_segment(toe, toe_length, metatarsal_length)
-
-func update_segment(segment, segment_length, parent_length):
-	segment.rotation
-	var mesh = segment.get_node("Mesh")
-	mesh.mesh.height = max(min_length, segment_length)
-	mesh.mesh.radius = 0.015
-	mesh.position.y = -(segment_length/2)
-	segment.position.y = -parent_length
+	var helper = func update_segment(segment, segment_length, parent_length):
+		var mesh = segment.get_node("Mesh")
+		mesh.mesh.height = max(min_length, segment_length)
+		mesh.mesh.radius = 0.015
+		mesh.position.y = -(segment_length/2)
+		segment.position.y = -parent_length
+	helper.call(femur, femur_length, 0)
+	helper.call(tibia, tibia_length, femur_length)
+	helper.call(metatarsal, metatarsal_length, tibia_length)
+	helper.call(toe, toe_length, metatarsal_length)
 
 func max_length():
 	return femur_length + tibia_length + metatarsal_length * cos(heel_elevation)
