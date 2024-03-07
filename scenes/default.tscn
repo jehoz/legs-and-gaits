@@ -1,17 +1,18 @@
-[gd_scene load_steps=9 format=3 uid="uid://coip7ho7vu6cf"]
+[gd_scene load_steps=14 format=3 uid="uid://coip7ho7vu6cf"]
 
 [ext_resource type="Script" path="res://scripts/creature.gd" id="1_e1xh8"]
 [ext_resource type="Script" path="res://scripts/blueprint/leg_blueprint.gd" id="2_sau8g"]
 [ext_resource type="Script" path="res://scripts/blueprint/body_segment_blueprint.gd" id="3_yjyq1"]
 [ext_resource type="Script" path="res://scripts/blueprint/creature_blueprint.gd" id="4_kntse"]
+[ext_resource type="Texture2D" uid="uid://uydeaoymddl7" path="res://assets/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="5_8pggb"]
 
 [sub_resource type="Resource" id="Resource_4swe1"]
 script = ExtResource("2_sau8g")
-femur_length = 0.5
-tibia_length = 0.45
-metatarsal_length = 0.3
-toe_length = 0.2
-heel_elevation = 0.8
+femur_length = 0.55
+tibia_length = 0.55
+metatarsal_length = 0.1
+toe_length = 0.1
+heel_elevation = 0.0
 leg_type = 1
 
 [sub_resource type="Resource" id="Resource_7xwdi"]
@@ -22,24 +23,50 @@ leg_blueprint = SubResource("Resource_4swe1")
 [sub_resource type="Resource" id="Resource_0glcd"]
 script = ExtResource("4_kntse")
 body_segments = Array[ExtResource("3_yjyq1")]([SubResource("Resource_7xwdi")])
-speed = 2.5
+speed = 3.62
 leg_pair_phase_difference = 1.5708
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dcppm"]
+albedo_color = Color(0.160784, 0.101961, 0.0705882, 1)
 
 [sub_resource type="QuadMesh" id="QuadMesh_kebb5"]
 size = Vector2(10, 10)
 orientation = 1
 
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_5udmt"]
+panorama = ExtResource("5_8pggb")
+
+[sub_resource type="Sky" id="Sky_1dely"]
+sky_material = SubResource("PanoramaSkyMaterial_5udmt")
+
+[sub_resource type="Environment" id="Environment_6qart"]
+background_mode = 2
+sky = SubResource("Sky_1dely")
+ambient_light_source = 2
+ambient_light_color = Color(0.396078, 0.396078, 0.396078, 1)
+ambient_light_energy = 2.0
+tonemap_mode = 3
+tonemap_exposure = 1.2
+tonemap_white = 16.0
+
 [node name="Default" type="Node3D"]
 
 [node name="Creature" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 script = ExtResource("1_e1xh8")
 blueprint = SubResource("Resource_0glcd")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 1, 0.5, -1)
-
-[node name="OmniLight3D" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -1)
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -1, 0.5, 1)
 
 [node name="Ground" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_dcppm")
 mesh = SubResource("QuadMesh_kebb5")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_6qart")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(-0.918031, 0.202607, -0.340837, -0.392504, -0.586225, 0.708718, -0.0562163, 0.784405, 0.617697, 0.482797, 5.92837, 2.46534)
+light_energy = 2.0
+shadow_enabled = true
