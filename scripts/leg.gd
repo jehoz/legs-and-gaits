@@ -151,6 +151,7 @@ func solve_ik():
 		var rot_quat = Quaternion(from, to)
 		bone.rotation = Vector3.ZERO
 		bone.global_rotate(rot_quat.get_axis().normalized(), rot_quat.get_angle())
+		bone.scale = Vector3.ONE
 		bone.global_position = prev.origin
 		prev = bone.get_global_transform()
 		prev.origin = joint_pos
