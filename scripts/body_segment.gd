@@ -22,10 +22,6 @@ func _init(blueprint: BodySegmentBlueprint):
 		leg_r = Leg.new(blueprint.leg_blueprint, PI)
 		leg_r.name = "Leg R"
 		add_child(leg_r)
-		
-		oscillator = Oscillator.new(2 * blueprint._speed, blueprint._phase_offset + 0.93)
-		oscillator.name = "Oscillator"
-		add_child(oscillator)
 
 func _ready():
 	if leg_l != null:
