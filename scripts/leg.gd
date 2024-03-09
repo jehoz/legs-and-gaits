@@ -94,17 +94,18 @@ func max_length():
 func move_foot_target():
 	var step_height = max_length() * 0.125
 	var step_distance = step_height * 2.0
-	var forward = -get_global_transform().basis.z
+	var forward = -global_basis.z
 	
-	foot_target.global_position = global_position + forward * oscillator.skewed(0.5) * step_distance
+	foot_target.global_position = global_position + (forward * (oscillator.skewed(0.5) * step_distance))
 	foot_target.global_position.y = max(0, oscillator.asymmetric(-1.0, PI/2)) * step_height
 
 func is_load_phase():
 	return foot_target.global_position.y <= 0 and foot_target.position.z > 0
 
 func solve_ik():
-	var forward = -get_global_transform().basis.z
-	var left = get_global_transform().basis.x
+	var forward = -global_basis.z
+	var left = global_basis.x
+	
 	# position of joint between toe and metatarsal is offset from foot target
 	# depending on how high the heel is raised
 	# for fully plantigrade feet the target is the heel of the foot, for fully
@@ -143,11 +144,13 @@ func solve_ik():
 	var bones = [femur, tibia, metatarsal, toe]
 	var joints = [knee_pos, ankle_pos, ball_pos, toe_pos]
 	for i in range(4):
-		var bone = bones[i]
-		var joint_pos = joints[i]
-		var from = -prev.basis.y
-		var to = (joint_pos - prev.origin).normalized()
+		var bone: Node3D = bones[i]
+		var joint_pos: Vector3 = joints[i]
+		var from: Vector3 = -prev.basis.y
+		var to: Vector3 = (joint_pos - prev.origin).normalized()
 		var rot_quat = Quaternion(from, to)
-		bone.rotation = rot_quat.get_euler()
+		bone.rotation = Vector3.ZERO
+		bone.global_rotate(rot_quat.get_axis().normalized(), rot_quat.get_angle())
+		bone.global_position = prev.origin
 		prev = bone.get_global_transform()
 		prev.origin = joint_pos
