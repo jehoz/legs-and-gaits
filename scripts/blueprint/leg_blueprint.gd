@@ -12,3 +12,6 @@ enum LegType {LEG_FRONT, LEG_BACK}
 # populated by parent blueprint
 var _speed: float = 1.0
 var _phase_offset: float = 0
+
+var _step_height: float = 0.25
+var _step_distance: float = 0.25

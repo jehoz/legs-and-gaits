@@ -2,15 +2,17 @@ class_name BodySegment extends Node3D
 
 @export var radius: float = 0.2
 
-var oscillator: Oscillator = null
 var leg_l: Leg = null
 var leg_r: Leg = null
 
 var resting_height: float = 0
+var z_offset: float = 0
 var y_velocity: float = 0
 
 func _init(blueprint: BodySegmentBlueprint):
 	radius = blueprint.radius
+	z_offset = blueprint._z_offset
+	
 	if blueprint.leg_blueprint != null:
 		blueprint.leg_blueprint._speed = blueprint._speed
 		blueprint.leg_blueprint._phase_offset = blueprint._phase_offset
@@ -41,6 +43,7 @@ func _ready():
 
 func _process(delta):
 	if leg_l == null:
+		position.z = z_offset
 		return
 	
 	var y_target = resting_height - 0.05
@@ -48,7 +51,7 @@ func _process(delta):
 		y_target = resting_height + 0.05
 	
 	var error = y_target - position.y
-	y_velocity = 1.25 * error - 0.95 * (error - y_velocity)
+	y_velocity = 1.55 * error - 0.75 * (error - y_velocity)
 	
+	position.z = z_offset
 	position.y += y_velocity * delta
-	#position.y = resting_height - 0.025 * oscillator.asymmetric(-1.0)
