@@ -8,16 +8,16 @@
 
 [sub_resource type="Resource" id="Resource_4swe1"]
 script = ExtResource("2_sau8g")
-femur_length = 0.55
-tibia_length = 0.55
-metatarsal_length = 0.1
-toe_length = 0.1
-heel_elevation = 0.0
-leg_type = 1
+femur_length = 0.37
+tibia_length = 0.57
+metatarsal_length = 0.21
+toe_length = 0.06
+heel_elevation = 1.5
+leg_type = 0
 
 [sub_resource type="Resource" id="Resource_7xwdi"]
 script = ExtResource("3_yjyq1")
-radius = 0.15
+radius = 0.22
 leg_blueprint = SubResource("Resource_4swe1")
 
 [sub_resource type="Resource" id="Resource_uxhh3"]
@@ -26,11 +26,11 @@ radius = 0.2
 
 [sub_resource type="Resource" id="Resource_15lq8"]
 script = ExtResource("3_yjyq1")
-radius = 0.15
+radius = 0.175
 
 [sub_resource type="Resource" id="Resource_wygci"]
 script = ExtResource("3_yjyq1")
-radius = 0.2
+radius = 0.15
 
 [sub_resource type="Resource" id="Resource_0fvg2"]
 script = ExtResource("2_sau8g")

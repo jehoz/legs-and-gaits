@@ -25,6 +25,7 @@ func _init(blueprint: LegBlueprint, phase_offset: float = 0):
 	metatarsal_length = blueprint.metatarsal_length
 	toe_length = blueprint.toe_length
 	heel_elevation = blueprint.heel_elevation
+	leg_type = blueprint.leg_type
 	
 	if oscillator == null:
 		oscillator = Oscillator.new(blueprint._speed, blueprint._phase_offset + phase_offset)
@@ -136,6 +137,9 @@ func solve_ik():
 		var n = pow(l, 2) + pow(femur_length, 2) - pow(tibia_length, 2)
 		var d = 2 * l * femur_length
 		gamma = acos(n / d)
+	
+	if leg_type == LegBlueprint.LegType.LEG_FRONT:
+		gamma *= -1
 	
 	var knee_offset = (ankle_pos - global_position).normalized() * femur_length
 	var knee_pos = global_position + Quaternion(left, gamma) * knee_offset
