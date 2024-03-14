@@ -1,6 +1,7 @@
 class_name BodySegment extends Node3D
 
 @export var radius: float = 0.2
+@export var length: float = 0.2
 
 var leg_l: Leg = null
 var leg_r: Leg = null
@@ -11,6 +12,7 @@ var y_velocity: float = 0
 
 func _init(blueprint: BodySegmentBlueprint):
 	radius = blueprint.radius
+	length = blueprint.length
 	z_offset = blueprint._z_offset
 	
 	if blueprint.leg_blueprint != null:
@@ -34,10 +36,11 @@ func _ready():
 		leg_r.position.x = radius
 	
 	var mesh = MeshInstance3D.new()
-	mesh.mesh = SphereMesh.new()
+	mesh.mesh = CapsuleMesh.new()
 	mesh.mesh.radius = radius
-	mesh.mesh.height = 2 * radius
+	mesh.mesh.height = length + (2 * radius)
 	add_child(mesh)
+	mesh.rotate(Vector3.LEFT, PI/2)
 	
 	position.y = resting_height
 
@@ -51,7 +54,7 @@ func _process(delta):
 		y_target = resting_height + 0.05
 	
 	var error = y_target - position.y
-	y_velocity = 1.55 * error - 0.75 * (error - y_velocity)
+	y_velocity = 1.25 * error - 0.75 * (error - y_velocity)
 	
 	position.z = z_offset
 	position.y += y_velocity * delta

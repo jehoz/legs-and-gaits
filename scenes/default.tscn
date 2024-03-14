@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://coip7ho7vu6cf"]
+[gd_scene load_steps=18 format=3 uid="uid://coip7ho7vu6cf"]
 
 [ext_resource type="Script" path="res://scripts/creature.gd" id="1_e1xh8"]
 [ext_resource type="Script" path="res://scripts/blueprint/leg_blueprint.gd" id="2_sau8g"]
@@ -17,20 +17,19 @@ leg_type = 0
 
 [sub_resource type="Resource" id="Resource_7xwdi"]
 script = ExtResource("3_yjyq1")
-radius = 0.22
+radius = 0.15
+length = 0.1
 leg_blueprint = SubResource("Resource_4swe1")
 
 [sub_resource type="Resource" id="Resource_uxhh3"]
 script = ExtResource("3_yjyq1")
-radius = 0.2
+radius = 0.15
+length = 0.25
 
 [sub_resource type="Resource" id="Resource_15lq8"]
 script = ExtResource("3_yjyq1")
 radius = 0.175
-
-[sub_resource type="Resource" id="Resource_wygci"]
-script = ExtResource("3_yjyq1")
-radius = 0.15
+length = 0.25
 
 [sub_resource type="Resource" id="Resource_0fvg2"]
 script = ExtResource("2_sau8g")
@@ -44,11 +43,12 @@ leg_type = 1
 [sub_resource type="Resource" id="Resource_xxp1j"]
 script = ExtResource("3_yjyq1")
 radius = 0.2
+length = 0.1
 leg_blueprint = SubResource("Resource_0fvg2")
 
 [sub_resource type="Resource" id="Resource_0glcd"]
 script = ExtResource("4_kntse")
-body_segments = Array[ExtResource("3_yjyq1")]([SubResource("Resource_7xwdi"), SubResource("Resource_uxhh3"), SubResource("Resource_15lq8"), SubResource("Resource_wygci"), SubResource("Resource_xxp1j")])
+body_segments = Array[ExtResource("3_yjyq1")]([SubResource("Resource_7xwdi"), SubResource("Resource_uxhh3"), SubResource("Resource_15lq8"), SubResource("Resource_xxp1j")])
 speed = 3.62
 leg_pair_phase_difference = 1.571
 
@@ -78,7 +78,7 @@ tonemap_white = 16.0
 [node name="Default" type="Node3D"]
 
 [node name="Creature" type="Node3D" parent="."]
-transform = Transform3D(-0.88701, 0, -0.461748, 0, 1, 0, 0.461748, 0, -0.88701, 0, 0, 0)
+transform = Transform3D(-0.919821, 0, -0.392337, 0, 1, 0, 0.392337, 0, -0.919821, 0, 0, 0)
 script = ExtResource("1_e1xh8")
 blueprint = SubResource("Resource_0glcd")
 

@@ -17,9 +17,8 @@ func _process(_delta: float):
 		var segment = segments[i]
 		var z_percent = abs(segment.z_offset - z0) / abs(z1 - z0)
 		segment.position.y = y0 * (1 - z_percent) + y1 * z_percent
+	for i in range(segments.size()-1):
+		segments[i+1].look_at(segments[i].global_position, Vector3.UP)
 
-func distance_from_target(angles: Array[Vector3]):
-	pass
-
-func comfort():
+func error(angles: Array[Vector3]):
 	pass

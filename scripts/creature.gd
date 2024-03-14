@@ -19,7 +19,7 @@ func _enter_tree():
 	for segment_blueprint in blueprint.body_segments:
 		segment_blueprint._speed = blueprint.speed
 		segment_blueprint._phase_offset = leg_pair * blueprint.leg_pair_phase_difference
-		segment_blueprint._z_offset = last_segment_z + segment_blueprint.radius
+		segment_blueprint._z_offset = last_segment_z + segment_blueprint.length
 		last_segment_z = segment_blueprint._z_offset
 		
 		var bs = BodySegment.new(segment_blueprint)
