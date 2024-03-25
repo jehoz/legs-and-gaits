@@ -108,7 +108,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -240.0
 
-[node name="Panel" type="Panel" parent="CanvasLayer/Control" node_paths=PackedStringArray("creature", "front_femur_slider", "front_tibia_slider", "front_metatarsal_slider", "front_toe_slider", "front_ankle_lift_slider")]
+[node name="Panel" type="Panel" parent="CanvasLayer/Control" node_paths=PackedStringArray("creature", "front_femur_slider", "front_tibia_slider", "front_metatarsal_slider", "front_toe_slider", "front_ankle_lift_slider", "rear_femur_slider", "rear_tibia_slider", "rear_metatarsal_slider", "rear_toe_slider", "rear_ankle_lift_slider")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -123,6 +123,11 @@ front_tibia_slider = NodePath("MarginContainer/VBoxContainer/MarginContainer/VBo
 front_metatarsal_slider = NodePath("MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/FrontMetatarsalSlider")
 front_toe_slider = NodePath("MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/FrontToeSlider")
 front_ankle_lift_slider = NodePath("MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/FrontAnkleLiftSlider")
+rear_femur_slider = NodePath("MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer/RearFemurSlider")
+rear_tibia_slider = NodePath("MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer/RearTibiaSlider")
+rear_metatarsal_slider = NodePath("MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer/RearMetatarsalSlider")
+rear_toe_slider = NodePath("MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer/RearToeSlider")
+rear_ankle_lift_slider = NodePath("MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer/RearAnkleLiftSlider")
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/Panel"]
 layout_mode = 1
@@ -196,5 +201,65 @@ layout_mode = 2
 text = "Ankle Lift"
 
 [node name="FrontAnkleLiftSlider" type="HSlider" parent="CanvasLayer/Control/Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+
+[node name="RearLegsHeader" type="RichTextLabel" parent="CanvasLayer/Control/Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+bbcode_enabled = true
+text = "[b]Rear Legs[/b]"
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Control/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_right = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/Panel/MarginContainer/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="RearFemurLabel" type="RichTextLabel" parent="CanvasLayer/Control/Panel/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+text = "Femur"
+
+[node name="RearFemurSlider" type="HSlider" parent="CanvasLayer/Control/Panel/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+
+[node name="RearTibiaLabel" type="RichTextLabel" parent="CanvasLayer/Control/Panel/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+text = "Tibia"
+
+[node name="RearTibiaSlider" type="HSlider" parent="CanvasLayer/Control/Panel/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+
+[node name="RearMetatarsalLabel" type="RichTextLabel" parent="CanvasLayer/Control/Panel/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+text = "Metatarsal"
+
+[node name="RearMetatarsalSlider" type="HSlider" parent="CanvasLayer/Control/Panel/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+
+[node name="RearToeLabel" type="RichTextLabel" parent="CanvasLayer/Control/Panel/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+text = "Toe"
+
+[node name="RearToeSlider" type="HSlider" parent="CanvasLayer/Control/Panel/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+
+[node name="RearAnkleLiftLabel" type="RichTextLabel" parent="CanvasLayer/Control/Panel/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+text = "Ankle Lift"
+
+[node name="RearAnkleLiftSlider" type="HSlider" parent="CanvasLayer/Control/Panel/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
