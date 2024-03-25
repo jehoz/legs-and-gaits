@@ -6,7 +6,7 @@ const min_length: float = 0.0001
 @export var tibia_length: float = 0.45
 @export var metatarsal_length: float = 0.3
 @export var toe_length: float = 0.2
-@export var heel_elevation: float = 0.8
+@export var ankle_lift: float = 0.8
 
 @export var leg_type: LegBlueprint.LegType = LegBlueprint.LegType.LEG_BACK
 
@@ -24,7 +24,7 @@ func _init(blueprint: LegBlueprint, phase_offset: float = 0):
 	tibia_length = blueprint.tibia_length
 	metatarsal_length = blueprint.metatarsal_length
 	toe_length = blueprint.toe_length
-	heel_elevation = blueprint.heel_elevation
+	ankle_lift = blueprint.ankle_lift
 	leg_type = blueprint.leg_type
 	
 	if oscillator == null:
@@ -90,7 +90,7 @@ func update_segment_lengths():
 	helper.call(toe, toe_length, metatarsal_length)
 
 func max_length():
-	return femur_length + tibia_length + metatarsal_length * cos(heel_elevation)
+	return femur_length + tibia_length + metatarsal_length * cos(ankle_lift)
 
 func move_foot_target():
 	var step_height = max_length() * 0.125
@@ -111,8 +111,8 @@ func solve_ik():
 	# depending on how high the heel is raised
 	# for fully plantigrade feet the target is the heel of the foot, for fully
 	# ungiligrade feet the target is the ball of the foot
-	var elev_percent = clamp(1.0 - (heel_elevation / (PI/2)), 0.0, 1.0)
-	var ball_offset = elev_percent * (cos(heel_elevation) * metatarsal_length) * forward
+	var elev_percent = clamp(1.0 - (ankle_lift / (PI/2)), 0.0, 1.0)
+	var ball_offset = elev_percent * (cos(ankle_lift) * metatarsal_length) * forward
 	var ball_pos = foot_target.global_position + ball_offset
 	
 	# foot rotates slightly as the leg moves forward and backward, modifying the
@@ -122,12 +122,12 @@ func solve_ik():
 	var fw_xz = Vector2(forward.x, forward.z)
 	var xz_len = leg_xz.length() * sign(fw_xz.dot(leg_xz))
 	var delta_angle = atan(xz_len / hip_to_ball.y)
-	var _heel_elevation = heel_elevation + delta_angle
+	var _ankle_lift = ankle_lift + delta_angle
 	var toe_pos = ball_pos + (Quaternion(left, -min(0, delta_angle)) * forward * toe_length)
 	
 	# ankle position is computed from ball position and heel elevation
-	var a_off_xz = metatarsal_length * cos(_heel_elevation) * -forward
-	var ankle_offset = Vector3(a_off_xz.x, metatarsal_length * sin(_heel_elevation), a_off_xz.z)
+	var a_off_xz = metatarsal_length * cos(_ankle_lift) * -forward
+	var ankle_offset = Vector3(a_off_xz.x, metatarsal_length * sin(_ankle_lift), a_off_xz.z)
 	var ankle_pos = ball_pos + ankle_offset
 	
 	# law of cosines to find hip joint angle
