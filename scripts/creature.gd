@@ -8,8 +8,6 @@ func _enter_tree():
 	if blueprint == null:
 		return
 	
-	blueprint.connect("changed", propagate_blueprint_changes)
-	
 	var body_ik_solver = BodyIKSolver.new()
 	add_child(body_ik_solver)
 	
@@ -35,4 +33,10 @@ func propagate_blueprint_changes():
 	if blueprint == null:
 		return
 	
-	# TODO
+	for i in range(body_segments.size()):
+		var segment = body_segments[i]
+		var segment_blueprint = blueprint.body_segments[i]
+		# for now pretend legs will always stay where they are
+		if segment_blueprint.leg_blueprint != null:
+			segment.leg_l.update_from_blueprint(segment_blueprint.leg_blueprint)
+			segment.leg_r.update_from_blueprint(segment_blueprint.leg_blueprint)

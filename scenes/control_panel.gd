@@ -31,4 +31,17 @@ func _ready():
 	front_ankle_lift_slider.min_value = 0
 	front_ankle_lift_slider.value = front_leg.ankle_lift
 	
+	for slider in [front_femur_slider, front_tibia_slider, front_metatarsal_slider, front_toe_slider, front_ankle_lift_slider]:
+		slider.value_changed.connect(update_blueprint)
 
+func update_blueprint(value):
+	var front_leg: LegBlueprint = creature.blueprint.body_segments[0].leg_blueprint
+	front_leg.femur_length = front_femur_slider.value
+	front_leg.tibia_length = front_tibia_slider.value
+	front_leg.metatarsal_length = front_metatarsal_slider.value
+	front_leg.toe_length = front_toe_slider.value
+	front_leg.ankle_lift = front_ankle_lift_slider.value
+	
+	creature.blueprint.body_segments[0].leg_blueprint = front_leg
+	
+	creature.propagate_blueprint_changes()

@@ -77,6 +77,14 @@ func make_segment(segment_length: float):
 	
 	return segment
 
+func update_from_blueprint(blueprint: LegBlueprint):
+	femur_length = blueprint.femur_length
+	tibia_length = blueprint.tibia_length
+	metatarsal_length = blueprint.metatarsal_length
+	toe_length = blueprint.toe_length
+	ankle_lift = blueprint.ankle_lift
+	leg_type = blueprint.leg_type
+
 func update_segment_lengths():
 	var helper = func update_segment(segment, segment_length, parent_length):
 		var mesh = segment.get_node("Mesh")
