@@ -49,6 +49,8 @@ func _process(delta):
 		position.z = z_offset
 		return
 	
+	var resting_height = leg_l.max_length() * 0.8
+	
 	var y_target = resting_height - 0.05
 	if leg_l.is_load_phase() or leg_r.is_load_phase():
 		y_target = resting_height + 0.05
