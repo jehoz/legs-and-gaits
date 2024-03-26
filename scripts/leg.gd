@@ -98,7 +98,7 @@ func update_segment_lengths():
 	helper.call(toe, toe_length, metatarsal_length)
 
 func max_length():
-	return femur_length + tibia_length + metatarsal_length * cos(ankle_lift)
+	return femur_length + tibia_length + metatarsal_length * sin(ankle_lift)
 
 func move_foot_target():
 	var step_height = max_length() * 0.125
