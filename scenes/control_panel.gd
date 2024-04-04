@@ -18,6 +18,32 @@ extends Control
 const MIN_SEGMENT_LENGTH: float = 0.001
 const MAX_SEGMENT_LENGTH: float = 1.0
 
+@export var gait_speed_slider: Slider
+
+const MIN_GAIT_SPEED: float = 0
+const MAX_GAIT_SPEED: float = 10
+
+@export var phase_offset_slider: Slider
+
+const MIN_PHASE_OFFSET: float = 0
+const MAX_PHASE_OFFSET: float = PI
+
+@export var step_height_slider: Slider
+@export var step_length_slider: Slider
+
+const MIN_STEP_SIZE: float = 0
+const MAX_STEP_SIZE: float = 1
+
+@export var up_down_bias_slider: Slider
+
+const MIN_VERTICAL_BIAS: float = -10
+const MAX_VERTICAL_BIAS: float = 10
+
+@export var front_back_bias_slider: Slider
+
+const MIN_HORIZONTAL_BIAS: float = -1
+const MAX_HORIZONTAL_BIAS: float = 1
+
 func _ready():
 	var bp: CreatureBlueprint = creature.blueprint
 	var front_leg: LegBlueprint = bp.body_segments[0].leg_blueprint
@@ -53,17 +79,51 @@ func _ready():
 	rear_ankle_lift_slider.min_value = 0
 	rear_ankle_lift_slider.value = rear_leg.ankle_lift
 	
+	gait_speed_slider.step = 0.001
+	gait_speed_slider.max_value = MAX_GAIT_SPEED
+	gait_speed_slider.min_value = MIN_GAIT_SPEED
+	gait_speed_slider.value = bp.speed
+	
+	phase_offset_slider.step = 0.001
+	phase_offset_slider.max_value = MAX_PHASE_OFFSET
+	phase_offset_slider.min_value = MIN_PHASE_OFFSET
+	phase_offset_slider.value = bp.leg_pair_phase_difference
+	
+	step_height_slider.step = 0.001
+	step_height_slider.max_value = MAX_STEP_SIZE
+	step_height_slider.min_value = MIN_STEP_SIZE
+	step_height_slider.value = bp.step_height
+	
+	step_length_slider.step = 0.001
+	step_length_slider.max_value = MAX_STEP_SIZE
+	step_length_slider.min_value = MIN_STEP_SIZE
+	step_length_slider.value = bp.step_length
+	
+	up_down_bias_slider.step = 0.001
+	up_down_bias_slider.max_value = MAX_VERTICAL_BIAS
+	up_down_bias_slider.min_value = MAX_VERTICAL_BIAS
+	up_down_bias_slider.value = bp.osc_vertical_bias
+	
+	front_back_bias_slider.step = 0.001
+	front_back_bias_slider.max_value = MAX_HORIZONTAL_BIAS
+	front_back_bias_slider.min_value = MAX_HORIZONTAL_BIAS
+	front_back_bias_slider.value = bp.osc_horizontal_bias
+	
 	for slider in [
 			front_femur_slider, front_tibia_slider, 
 			front_metatarsal_slider, front_toe_slider, 
 			front_ankle_lift_slider, rear_femur_slider, 
 			rear_tibia_slider, rear_metatarsal_slider, 
-			rear_toe_slider, rear_ankle_lift_slider]:
+			rear_toe_slider, rear_ankle_lift_slider,
+			gait_speed_slider, phase_offset_slider,
+			step_height_slider, step_length_slider,
+			up_down_bias_slider, front_ankle_lift_slider]:
 		slider.value_changed.connect(update_blueprint)
 
 func update_blueprint(value):
 	var front_leg: LegBlueprint = creature.blueprint.body_segments[0].leg_blueprint
 	var rear_leg: LegBlueprint = creature.blueprint.body_segments[-1].leg_blueprint
+	
 	front_leg.femur_length = front_femur_slider.value
 	front_leg.tibia_length = front_tibia_slider.value
 	front_leg.metatarsal_length = front_metatarsal_slider.value
@@ -75,6 +135,16 @@ func update_blueprint(value):
 	rear_leg.metatarsal_length = rear_metatarsal_slider.value
 	rear_leg.toe_length = rear_toe_slider.value
 	rear_leg.ankle_lift = rear_ankle_lift_slider.value
+	
+	front_leg.phase_offset = 0
+	rear_leg.phase_offset = phase_offset_slider.value
+	
+	for leg in [front_leg, rear_leg]:
+		leg.speed = gait_speed_slider.value
+		leg.step_height = step_height_slider.value
+		leg.step_length = step_length_slider.value
+		leg.osc_vertical_bias = up_down_bias_slider.value
+		leg.osc_horizontal_bias = front_back_bias_slider.value
 	
 	creature.blueprint.body_segments[0].leg_blueprint = front_leg
 	creature.blueprint.body_segments[-1].leg_blueprint = rear_leg
