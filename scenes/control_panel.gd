@@ -101,12 +101,12 @@ func _ready():
 	
 	up_down_bias_slider.step = 0.001
 	up_down_bias_slider.max_value = MAX_VERTICAL_BIAS
-	up_down_bias_slider.min_value = MAX_VERTICAL_BIAS
+	up_down_bias_slider.min_value = MIN_VERTICAL_BIAS
 	up_down_bias_slider.value = bp.osc_vertical_bias
 	
 	front_back_bias_slider.step = 0.001
 	front_back_bias_slider.max_value = MAX_HORIZONTAL_BIAS
-	front_back_bias_slider.min_value = MAX_HORIZONTAL_BIAS
+	front_back_bias_slider.min_value = MIN_HORIZONTAL_BIAS
 	front_back_bias_slider.value = bp.osc_horizontal_bias
 	
 	for slider in [
@@ -139,8 +139,8 @@ func update_blueprint(value):
 	creature.blueprint.speed = gait_speed_slider.value
 	creature.blueprint.step_height = step_height_slider.value
 	creature.blueprint.step_length = step_length_slider.value
-	#creature.blueprint.osc_vertical_bias = up_down_bias_slider.value
-	#creature.blueprint.osc_horizontal_bias = front_back_bias_slider.value
+	creature.blueprint.osc_vertical_bias = up_down_bias_slider.value
+	creature.blueprint.osc_horizontal_bias = front_back_bias_slider.value
 	
 	creature.blueprint.leg_pair_phase_difference = phase_offset_slider.value
 	
