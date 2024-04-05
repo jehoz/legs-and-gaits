@@ -10,31 +10,30 @@ var resting_height: float = 0
 var z_offset: float = 0
 var y_velocity: float = 0
 
-func _init(blueprint: BodySegmentBlueprint):
-	radius = blueprint.radius
-	length = blueprint.length
-	z_offset = blueprint._z_offset
-	
-	if blueprint.leg_blueprint != null:
-		blueprint.leg_blueprint._speed = blueprint._speed
-		blueprint.leg_blueprint._phase_offset = blueprint._phase_offset
-		
-		leg_l = Leg.new(blueprint.leg_blueprint)
+func _init(radius: float, length: float, z_offset: float):
+	self.radius = radius
+	self.length = length
+	self.z_offset = z_offset
+
+func set_legs(leg_blueprint: LegBlueprint, phase_offset: float):
+	if leg_l == null:  # assume that if one leg is exists, both exist
+		leg_l = Leg.new(leg_blueprint, phase_offset)
 		leg_l.name = "Leg L"
 		add_child(leg_l)
 		
-		leg_r = Leg.new(blueprint.leg_blueprint, PI)
+		leg_r = Leg.new(leg_blueprint, phase_offset + leg_blueprint.side_phase_difference)
 		leg_r.name = "Leg R"
 		add_child(leg_r)
+		
+	else:
+		leg_l.update_from_blueprint(leg_blueprint, phase_offset)
+		leg_r.update_from_blueprint(leg_blueprint, phase_offset + leg_blueprint.side_phase_difference)
+
+	resting_height = leg_l.max_length() * 0.85
+	leg_l.position.x = -radius
+	leg_r.position.x = radius
 
 func _ready():
-	if leg_l != null:
-		resting_height = leg_l.max_length() * 0.85
-		leg_l.position.x = -radius
-	
-	if leg_r != null:
-		leg_r.position.x = radius
-	
 	var mesh = MeshInstance3D.new()
 	mesh.mesh = CapsuleMesh.new()
 	mesh.mesh.radius = radius

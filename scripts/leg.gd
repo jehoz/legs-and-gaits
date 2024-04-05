@@ -8,6 +8,11 @@ const min_length: float = 0.0001
 @export var toe_length: float = 0.2
 @export var ankle_lift: float = 0.8
 
+@export var step_height: float = 0.125
+@export var step_length: float = 0.25
+@export var osc_vertical_bias: float = -1.0
+@export var osc_horizontal_bias: float = 0.5
+
 @export var leg_type: LegBlueprint.LegType = LegBlueprint.LegType.LEG_BACK
 
 var foot_target: Node3D = null
@@ -18,7 +23,7 @@ var tibia: Node3D = null
 var metatarsal: Node3D = null
 var toe: Node3D = null
 
-func _init(blueprint: LegBlueprint, phase_offset: float = 0):
+func _init(blueprint: LegBlueprint, phase_offset: float):
 	# copy values from blueprint
 	femur_length = blueprint.femur_length
 	tibia_length = blueprint.tibia_length
@@ -28,7 +33,7 @@ func _init(blueprint: LegBlueprint, phase_offset: float = 0):
 	leg_type = blueprint.leg_type
 	
 	if oscillator == null:
-		oscillator = Oscillator.new(blueprint._speed, blueprint._phase_offset + phase_offset)
+		oscillator = Oscillator.new(blueprint.speed, phase_offset)
 		oscillator.name = "Oscillator"
 		add_child(oscillator)
 	if foot_target == null:
@@ -77,13 +82,21 @@ func make_segment(segment_length: float):
 	
 	return segment
 
-func update_from_blueprint(blueprint: LegBlueprint):
+func update_from_blueprint(blueprint: LegBlueprint, new_phase_offset: float):
 	femur_length = blueprint.femur_length
 	tibia_length = blueprint.tibia_length
 	metatarsal_length = blueprint.metatarsal_length
 	toe_length = blueprint.toe_length
 	ankle_lift = blueprint.ankle_lift
 	leg_type = blueprint.leg_type
+	
+	step_height = blueprint.step_height * max_length()
+	step_length = blueprint.step_length * max_length()
+	osc_vertical_bias = blueprint.osc_vertical_bias
+	osc_horizontal_bias = blueprint.osc_horizontal_bias
+	
+	oscillator.frequency = blueprint.speed
+	oscillator.phase = new_phase_offset
 
 func update_segment_lengths():
 	var helper = func update_segment(segment, segment_length, parent_length):
@@ -101,12 +114,12 @@ func max_length():
 	return femur_length + tibia_length + metatarsal_length * sin(ankle_lift)
 
 func move_foot_target():
-	var step_height = max_length() * 0.125
-	var step_distance = step_height * 2.0
+	#var step_height = max_length() * 0.125
+	#var step_distance = step_height * 2.0
 	var forward = -global_basis.z
 	
-	foot_target.global_position = global_position + (forward * (oscillator.skewed(0.5) * step_distance))
-	foot_target.global_position.y = max(0, oscillator.asymmetric(-1.0, PI/2)) * step_height
+	foot_target.global_position = global_position + (forward * (oscillator.skewed(osc_horizontal_bias) * step_length))
+	foot_target.global_position.y = max(0, oscillator.asymmetric(osc_vertical_bias, PI/2)) * step_height
 
 func is_load_phase():
 	return foot_target.global_position.y <= 0 and foot_target.position.z > 0

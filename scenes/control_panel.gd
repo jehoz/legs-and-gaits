@@ -46,8 +46,8 @@ const MAX_HORIZONTAL_BIAS: float = 1
 
 func _ready():
 	var bp: CreatureBlueprint = creature.blueprint
-	var front_leg: LegBlueprint = bp.body_segments[0].leg_blueprint
-	var rear_leg: LegBlueprint = bp.body_segments[-1].leg_blueprint
+	var front_leg: LegBlueprint = bp.front_leg_blueprint
+	var rear_leg: LegBlueprint = bp.rear_leg_blueprint
 	
 	for slider in [
 			front_femur_slider, front_tibia_slider,
@@ -121,8 +121,8 @@ func _ready():
 		slider.value_changed.connect(update_blueprint)
 
 func update_blueprint(value):
-	var front_leg: LegBlueprint = creature.blueprint.body_segments[0].leg_blueprint
-	var rear_leg: LegBlueprint = creature.blueprint.body_segments[-1].leg_blueprint
+	var front_leg: LegBlueprint = creature.blueprint.front_leg_blueprint
+	var rear_leg: LegBlueprint = creature.blueprint.rear_leg_blueprint
 	
 	front_leg.femur_length = front_femur_slider.value
 	front_leg.tibia_length = front_tibia_slider.value
@@ -136,17 +136,15 @@ func update_blueprint(value):
 	rear_leg.toe_length = rear_toe_slider.value
 	rear_leg.ankle_lift = rear_ankle_lift_slider.value
 	
-	front_leg.phase_offset = 0
-	rear_leg.phase_offset = phase_offset_slider.value
+	creature.blueprint.speed = gait_speed_slider.value
+	creature.blueprint.step_height = step_height_slider.value
+	creature.blueprint.step_length = step_length_slider.value
+	#creature.blueprint.osc_vertical_bias = up_down_bias_slider.value
+	#creature.blueprint.osc_horizontal_bias = front_back_bias_slider.value
 	
-	for leg in [front_leg, rear_leg]:
-		leg.speed = gait_speed_slider.value
-		leg.step_height = step_height_slider.value
-		leg.step_length = step_length_slider.value
-		leg.osc_vertical_bias = up_down_bias_slider.value
-		leg.osc_horizontal_bias = front_back_bias_slider.value
+	creature.blueprint.leg_pair_phase_difference = phase_offset_slider.value
 	
-	creature.blueprint.body_segments[0].leg_blueprint = front_leg
-	creature.blueprint.body_segments[-1].leg_blueprint = rear_leg
+	creature.blueprint.front_leg_blueprint = front_leg
+	creature.blueprint.rear_leg_blueprint = rear_leg
 	
-	creature.propagate_blueprint_changes()
+	creature.apply_blueprint_changes()

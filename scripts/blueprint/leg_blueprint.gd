@@ -10,8 +10,11 @@ enum LegType {LEG_FRONT, LEG_BACK}
 @export var leg_type: LegType = LegType.LEG_BACK
 
 # populated by parent blueprint
-var _speed: float = 1.0
-var _phase_offset: float = 0
+var speed: float = 1.0
+var base_phase_offset: float = 0
+var side_phase_difference: float = PI
 
-var _step_height: float = 0.25
-var _step_distance: float = 0.25
+var step_height: float = 0.125
+var step_length: float = 0.25
+var osc_vertical_bias = -1.0
+var osc_horizontal_bias = 0.5
