@@ -13,11 +13,11 @@ point_count = 3
 
 [sub_resource type="Resource" id="Resource_vg5k8"]
 script = ExtResource("2_sau8g")
-femur_length = 0.5
-tibia_length = 0.45
-metatarsal_length = 0.3
-toe_length = 0.2
-ankle_lift = 0.8
+femur_length = 0.43
+tibia_length = 0.38
+metatarsal_length = 0.18
+toe_length = 0.1
+ankle_lift = 1.4
 leg_type = 0
 
 [sub_resource type="Resource" id="Resource_7scyc"]
@@ -41,8 +41,8 @@ leg_pair_phase_difference = 1.5708
 leg_side_phase_difference = 3.14159
 step_height = 0.125
 step_length = 0.25
-osc_vertical_bias = -1.0
-osc_horizontal_bias = 0.5
+osc_vertical_bias = -0.735
+osc_horizontal_bias = 0.435
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dcppm"]
 albedo_color = Color(0.160784, 0.101961, 0.0705882, 1)
