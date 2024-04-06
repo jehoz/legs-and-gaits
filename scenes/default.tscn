@@ -99,11 +99,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -240.0
 
-[node name="Panel" type="Panel" parent="CanvasLayer/Control" node_paths=PackedStringArray("creature", "front_femur_slider", "front_tibia_slider", "front_metatarsal_slider", "front_toe_slider", "front_ankle_lift_slider", "rear_femur_slider", "rear_tibia_slider", "rear_metatarsal_slider", "rear_toe_slider", "rear_ankle_lift_slider", "gait_speed_slider", "phase_offset_slider", "step_height_slider", "step_length_slider", "up_down_bias_slider", "front_back_bias_slider")]
+[node name="Panel" type="Panel" parent="CanvasLayer/Control" node_paths=PackedStringArray("creature", "front_femur_slider", "front_tibia_slider", "front_metatarsal_slider", "front_toe_slider", "front_ankle_lift_slider", "rear_femur_slider", "rear_tibia_slider", "rear_metatarsal_slider", "rear_toe_slider", "rear_ankle_lift_slider", "gait_speed_slider", "front_back_phase_offset_slider", "left_right_phase_offset_slider", "step_height_slider", "step_length_slider", "up_down_bias_slider", "front_back_bias_slider")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -9.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -120,7 +121,8 @@ rear_metatarsal_slider = NodePath("ScrollContainer/MarginContainer/VBoxContainer
 rear_toe_slider = NodePath("ScrollContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer/RearToeSlider")
 rear_ankle_lift_slider = NodePath("ScrollContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer/RearAnkleLiftSlider")
 gait_speed_slider = NodePath("ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer/SpeedSlider")
-phase_offset_slider = NodePath("ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer/PhaseOffsetSlider")
+front_back_phase_offset_slider = NodePath("ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer/FrontBackPhaseOffsetSlider")
+left_right_phase_offset_slider = NodePath("ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer/LeftRightPhaseOffsetSlider")
 step_height_slider = NodePath("ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer/StepHeightSlider")
 step_length_slider = NodePath("ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer/StepLengthSlider")
 up_down_bias_slider = NodePath("ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer/UpDownBiasSlider")
@@ -135,6 +137,7 @@ offset_right = -2.0
 offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+scroll_vertical = 367
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/Panel/ScrollContainer"]
 layout_mode = 2
@@ -292,12 +295,21 @@ text = "Speed"
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
-[node name="PhaseOffsetLabel" type="RichTextLabel" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
+[node name="FrontBackPhaseOffsetLabel" type="RichTextLabel" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
-text = "Phase Offset"
+text = "Front/Back Phase Offset"
 
-[node name="PhaseOffsetSlider" type="HSlider" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
+[node name="FrontBackPhaseOffsetSlider" type="HSlider" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+
+[node name="LeftRightPhaseOffsetLabel" type="RichTextLabel" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+text = "Left/Right Phase Offset"
+
+[node name="LeftRightPhaseOffsetSlider" type="HSlider" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
