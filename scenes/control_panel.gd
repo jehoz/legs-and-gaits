@@ -117,7 +117,7 @@ func _ready():
 			rear_toe_slider, rear_ankle_lift_slider,
 			gait_speed_slider, phase_offset_slider,
 			step_height_slider, step_length_slider,
-			up_down_bias_slider, front_ankle_lift_slider]:
+			up_down_bias_slider, front_back_bias_slider]:
 		slider.value_changed.connect(update_blueprint)
 
 func update_blueprint(value):
