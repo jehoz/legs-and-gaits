@@ -23,7 +23,8 @@ const MAX_SEGMENT_LENGTH: float = 1.0
 const MIN_GAIT_SPEED: float = 0
 const MAX_GAIT_SPEED: float = 10
 
-@export var phase_offset_slider: Slider
+@export var front_back_phase_offset_slider: Slider
+@export var left_right_phase_offset_slider: Slider
 
 const MIN_PHASE_OFFSET: float = 0
 const MAX_PHASE_OFFSET: float = PI
@@ -84,10 +85,15 @@ func _ready():
 	gait_speed_slider.min_value = MIN_GAIT_SPEED
 	gait_speed_slider.value = bp.speed
 	
-	phase_offset_slider.step = 0.001
-	phase_offset_slider.max_value = MAX_PHASE_OFFSET
-	phase_offset_slider.min_value = MIN_PHASE_OFFSET
-	phase_offset_slider.value = bp.leg_pair_phase_difference
+	front_back_phase_offset_slider.step = 0.001
+	front_back_phase_offset_slider.max_value = MAX_PHASE_OFFSET
+	front_back_phase_offset_slider.min_value = MIN_PHASE_OFFSET
+	front_back_phase_offset_slider.value = bp.leg_pair_phase_difference
+	
+	left_right_phase_offset_slider.step = 0.001
+	left_right_phase_offset_slider.max_value = MAX_PHASE_OFFSET
+	left_right_phase_offset_slider.min_value = MIN_PHASE_OFFSET
+	left_right_phase_offset_slider.value = bp.leg_side_phase_difference
 	
 	step_height_slider.step = 0.001
 	step_height_slider.max_value = MAX_STEP_SIZE
@@ -115,7 +121,8 @@ func _ready():
 			front_ankle_lift_slider, rear_femur_slider, 
 			rear_tibia_slider, rear_metatarsal_slider, 
 			rear_toe_slider, rear_ankle_lift_slider,
-			gait_speed_slider, phase_offset_slider,
+			gait_speed_slider, front_back_phase_offset_slider, 
+			left_right_phase_offset_slider,
 			step_height_slider, step_length_slider,
 			up_down_bias_slider, front_back_bias_slider]:
 		slider.value_changed.connect(update_blueprint)
@@ -142,7 +149,8 @@ func update_blueprint(value):
 	creature.blueprint.osc_vertical_bias = up_down_bias_slider.value
 	creature.blueprint.osc_horizontal_bias = front_back_bias_slider.value
 	
-	creature.blueprint.leg_pair_phase_difference = phase_offset_slider.value
+	creature.blueprint.leg_pair_phase_difference = front_back_phase_offset_slider.value
+	creature.blueprint.leg_side_phase_difference = left_right_phase_offset_slider.value
 	
 	creature.blueprint.front_leg_blueprint = front_leg
 	creature.blueprint.rear_leg_blueprint = rear_leg
