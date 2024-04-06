@@ -8,15 +8,20 @@ extends Control
 @export var front_metatarsal_slider: Slider
 @export var front_toe_slider: Slider
 @export var front_ankle_lift_slider: Slider
+@export var front_natural_bend_slider: Slider
 
 @export var rear_femur_slider: Slider
 @export var rear_tibia_slider: Slider
 @export var rear_metatarsal_slider: Slider
 @export var rear_toe_slider: Slider
 @export var rear_ankle_lift_slider: Slider
+@export var rear_natural_bend_slider: Slider
 
 const MIN_SEGMENT_LENGTH: float = 0.001
 const MAX_SEGMENT_LENGTH: float = 1.0
+
+const MIN_NATURAL_BEND: float = 0.0
+const MAX_NATURAL_BEND: float = 0.75
 
 @export var gait_speed_slider: Slider
 
@@ -80,6 +85,16 @@ func _ready():
 	rear_ankle_lift_slider.min_value = 0
 	rear_ankle_lift_slider.value = rear_leg.ankle_lift
 	
+	front_natural_bend_slider.step = 0.001
+	front_natural_bend_slider.max_value = MAX_NATURAL_BEND
+	front_natural_bend_slider.min_value = MIN_NATURAL_BEND
+	front_natural_bend_slider.value = front_leg.natural_bend
+	
+	rear_natural_bend_slider.step = 0.001
+	rear_natural_bend_slider.max_value = MAX_NATURAL_BEND
+	rear_natural_bend_slider.min_value = MIN_NATURAL_BEND
+	rear_natural_bend_slider.value = rear_leg.natural_bend
+	
 	gait_speed_slider.step = 0.001
 	gait_speed_slider.max_value = MAX_GAIT_SPEED
 	gait_speed_slider.min_value = MIN_GAIT_SPEED
@@ -121,6 +136,7 @@ func _ready():
 			front_ankle_lift_slider, rear_femur_slider, 
 			rear_tibia_slider, rear_metatarsal_slider, 
 			rear_toe_slider, rear_ankle_lift_slider,
+			front_natural_bend_slider, rear_natural_bend_slider,
 			gait_speed_slider, front_back_phase_offset_slider, 
 			left_right_phase_offset_slider,
 			step_height_slider, step_length_slider,
@@ -136,12 +152,14 @@ func update_blueprint(value):
 	front_leg.metatarsal_length = front_metatarsal_slider.value
 	front_leg.toe_length = front_toe_slider.value
 	front_leg.ankle_lift = front_ankle_lift_slider.value
+	front_leg.natural_bend = front_natural_bend_slider.value
 	
 	rear_leg.femur_length = rear_femur_slider.value
 	rear_leg.tibia_length = rear_tibia_slider.value
 	rear_leg.metatarsal_length = rear_metatarsal_slider.value
 	rear_leg.toe_length = rear_toe_slider.value
 	rear_leg.ankle_lift = rear_ankle_lift_slider.value
+	rear_leg.natural_bend = rear_natural_bend_slider.value
 	
 	creature.blueprint.speed = gait_speed_slider.value
 	creature.blueprint.step_height = step_height_slider.value

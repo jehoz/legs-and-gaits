@@ -9,6 +9,8 @@ class_name LegBlueprint extends Resource
 enum LegType {LEG_FRONT, LEG_BACK}
 @export var leg_type: LegType = LegType.LEG_BACK
 
+@export var natural_bend: float = 0.15
+
 # populated by parent blueprint
 var speed: float = 1.0
 var base_phase_offset: float = 0

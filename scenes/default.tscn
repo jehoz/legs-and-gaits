@@ -8,7 +8,7 @@
 
 [sub_resource type="Curve" id="Curve_ed4xn"]
 max_value = 0.2
-_data = [Vector2(0, 0.167033), 0.0, 0.0, 0, 0, Vector2(0.395555, 0.127473), 0.0141287, 0.0141287, 0, 0, Vector2(1, 0.173626), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 0.151648), 0.0, 0.0, 0, 0, Vector2(0.502222, 0.140659), 0.0, 0.0, 0, 0, Vector2(1, 0.173626), 0.0, 0.0, 0, 0]
 point_count = 3
 
 [sub_resource type="Resource" id="Resource_vg5k8"]
@@ -19,6 +19,7 @@ metatarsal_length = 0.18
 toe_length = 0.1
 ankle_lift = 1.4
 leg_type = 0
+natural_bend = 0.1
 
 [sub_resource type="Resource" id="Resource_7scyc"]
 script = ExtResource("2_sau8g")
@@ -28,6 +29,7 @@ metatarsal_length = 0.3
 toe_length = 0.2
 ankle_lift = 0.8
 leg_type = 1
+natural_bend = 0.15
 
 [sub_resource type="Resource" id="Resource_0glcd"]
 script = ExtResource("4_kntse")
@@ -99,7 +101,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -240.0
 
-[node name="Panel" type="Panel" parent="CanvasLayer/Control" node_paths=PackedStringArray("creature", "front_femur_slider", "front_tibia_slider", "front_metatarsal_slider", "front_toe_slider", "front_ankle_lift_slider", "rear_femur_slider", "rear_tibia_slider", "rear_metatarsal_slider", "rear_toe_slider", "rear_ankle_lift_slider", "gait_speed_slider", "front_back_phase_offset_slider", "left_right_phase_offset_slider", "step_height_slider", "step_length_slider", "up_down_bias_slider", "front_back_bias_slider")]
+[node name="Panel" type="Panel" parent="CanvasLayer/Control" node_paths=PackedStringArray("creature", "front_femur_slider", "front_tibia_slider", "front_metatarsal_slider", "front_toe_slider", "front_ankle_lift_slider", "front_natural_bend_slider", "rear_femur_slider", "rear_tibia_slider", "rear_metatarsal_slider", "rear_toe_slider", "rear_ankle_lift_slider", "rear_natural_bend_slider", "gait_speed_slider", "front_back_phase_offset_slider", "left_right_phase_offset_slider", "step_height_slider", "step_length_slider", "up_down_bias_slider", "front_back_bias_slider")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -115,11 +117,13 @@ front_tibia_slider = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Mar
 front_metatarsal_slider = NodePath("ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/FrontMetatarsalSlider")
 front_toe_slider = NodePath("ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/FrontToeSlider")
 front_ankle_lift_slider = NodePath("ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/FrontAnkleLiftSlider")
+front_natural_bend_slider = NodePath("ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/FrontBendSlider")
 rear_femur_slider = NodePath("ScrollContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer/RearFemurSlider")
 rear_tibia_slider = NodePath("ScrollContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer/RearTibiaSlider")
 rear_metatarsal_slider = NodePath("ScrollContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer/RearMetatarsalSlider")
 rear_toe_slider = NodePath("ScrollContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer/RearToeSlider")
 rear_ankle_lift_slider = NodePath("ScrollContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer/RearAnkleLiftSlider")
+rear_natural_bend_slider = NodePath("ScrollContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer/RearBendSlider")
 gait_speed_slider = NodePath("ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer/SpeedSlider")
 front_back_phase_offset_slider = NodePath("ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer/FrontBackPhaseOffsetSlider")
 left_right_phase_offset_slider = NodePath("ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer/LeftRightPhaseOffsetSlider")
@@ -137,7 +141,6 @@ offset_right = -2.0
 offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-scroll_vertical = 367
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/Panel/ScrollContainer"]
 layout_mode = 2
@@ -211,6 +214,15 @@ text = "Ankle Lift"
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
+[node name="FrontBendLabel" type="RichTextLabel" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+text = "Natural Bend"
+
+[node name="FrontBendSlider" type="HSlider" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+
 [node name="RearLegsHeader" type="RichTextLabel" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
@@ -268,6 +280,15 @@ layout_mode = 2
 text = "Ankle Lift"
 
 [node name="RearAnkleLiftSlider" type="HSlider" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+
+[node name="RearBendLabel" type="RichTextLabel" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+text = "Natural Bend"
+
+[node name="RearBendSlider" type="HSlider" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 

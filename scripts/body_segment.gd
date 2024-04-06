@@ -29,7 +29,7 @@ func set_legs(leg_blueprint: LegBlueprint, phase_offset: float):
 		leg_l.update_from_blueprint(leg_blueprint, phase_offset)
 		leg_r.update_from_blueprint(leg_blueprint, phase_offset + leg_blueprint.side_phase_difference)
 
-	resting_height = leg_l.max_length() * 0.85
+	resting_height = leg_l.max_length() * (1 - clampf(leg_blueprint.natural_bend, 0, 1))
 	leg_l.position.x = -radius
 	leg_r.position.x = radius
 
@@ -47,8 +47,6 @@ func _process(delta):
 	if leg_l == null:
 		position.z = z_offset
 		return
-	
-	var resting_height = leg_l.max_length() * 0.8
 	
 	var y_target = resting_height - 0.05
 	if leg_l.is_load_phase() or leg_r.is_load_phase():
