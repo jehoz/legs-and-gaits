@@ -134,9 +134,8 @@ func move_foot_target():
 	
 	if foot_target.position.length() > max_length():
 		foot_target.position = foot_target.position.normalized() * max_length()
-	
-	if foot_target.position.y > -min_length():
-		foot_target.position.y = -min_length()
+	elif foot_target.position.length() < min_length():
+		foot_target.position = foot_target.position.normalized() * max_length()
 
 func is_planted():
 	return oscillator.asymmetric(osc_vertical_bias, PI/2) <= 0
