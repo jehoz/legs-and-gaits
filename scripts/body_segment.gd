@@ -47,27 +47,33 @@ func _ready():
 
 var prev_error = 0
 func _process(delta):
+	position.z = z_offset
 	if leg_l == null:
-		position.z = z_offset
 		return
 	
+	# twist body segments with leg movement
+	var twist =  leg_l.oscillator.sine()
+	var look_target = global_position + (-get_parent_node_3d().global_basis.z)
+	look_at(look_target, global_basis.y)
+	rotate_y(-twist * 0.2)
+	
 	if (leg_l.is_planted() or leg_r.is_planted()) and position.y < resting_height:
-		var force = (atan(10 + leg_l.osc_vertical_bias) + PI) / (2 * PI)
+		var force = atan(leg_l.osc_vertical_bias) + (PI / 2)
 		force *= max(-leg_l.oscillator.asymmetric(leg_l.osc_vertical_bias),
 					 -leg_r.oscillator.asymmetric(leg_r.osc_vertical_bias))
 		
 		var error = resting_height - position.y
 		
-		y_velocity += (500.0 * error) * delta * force
+		y_velocity += (500.0 * error - 100 * (error - prev_error)) * delta * force
 		y_velocity /= 2.0
 		prev_error = error
 	
 	y_velocity -= GRAVITY * delta
 	
-	position.z = z_offset
 	position.y += y_velocity * delta
 	
 	# don't fall through the ground
-	if position.y < radius:
-		position.y = radius
+	var bottom = max(radius, leg_l.min_length())
+	if position.y < bottom:
+		position.y = bottom
 		y_velocity = 0
