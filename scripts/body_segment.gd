@@ -52,19 +52,26 @@ func _process(delta):
 		return
 	
 	# twist body segments with leg movement
-	var twist =  leg_l.oscillator.sine()
+	var foot_diff = leg_r.foot_target.global_position - leg_l.foot_target.global_position
+	var twist = atan(foot_diff.z / foot_diff.x)
 	var look_target = global_position + (-get_parent_node_3d().global_basis.z)
 	look_at(look_target, global_basis.y)
-	rotate_y(-twist * 0.2)
+	rotate_y(-twist * 0.1)
 	
-	if (leg_l.is_planted() or leg_r.is_planted()) and position.y < resting_height:
-		var force = atan(leg_l.osc_vertical_bias) + (PI / 2)
-		force *= max(-leg_l.oscillator.asymmetric(leg_l.osc_vertical_bias),
-					 -leg_r.oscillator.asymmetric(leg_r.osc_vertical_bias))
+	# upward force applied by leg proportional to step
+	var leg_force = max(-leg_l.oscillator.asymmetric(leg_l.osc_vertical_bias, PI/2),
+					 	-leg_r.oscillator.asymmetric(leg_r.osc_vertical_bias, PI/2))
+	# this just makes the walk animaton more natural looking
+	var target_height = resting_height + leg_force * leg_l.max_length() * 0.1
+	
+	# apply upward acceleration to body segment when leg is planted
+	if (leg_l.is_planted() or leg_r.is_planted()) and position.y < target_height:
+		var error = target_height - position.y
 		
-		var error = resting_height - position.y
+		var p_coeff = 75 + pow(2, leg_l.osc_vertical_bias) * leg_force * 0.5
+		var d_coeff = 10.0
 		
-		y_velocity += (500.0 * error - 100 * (error - prev_error)) * delta * force
+		y_velocity += (p_coeff * error - d_coeff * (error - prev_error)) * delta
 		y_velocity /= 2.0
 		prev_error = error
 	
