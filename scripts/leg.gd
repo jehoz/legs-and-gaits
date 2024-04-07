@@ -1,12 +1,14 @@
 class_name Leg extends Node3D
 
-const min_length: float = 0.0001
+const MIN_SEGMENT_LENGTH: float = 0.0001
+const MIN_LEG_EXTENSION: float = 0.2
 
 @export var femur_length: float = 0.5
 @export var tibia_length: float = 0.45
 @export var metatarsal_length: float = 0.3
 @export var toe_length: float = 0.2
 @export var ankle_lift: float = 0.8
+@export var natural_bend: float = 0.15
 
 @export var step_height: float = 0.125
 @export var step_length: float = 0.25
@@ -88,6 +90,7 @@ func update_from_blueprint(blueprint: LegBlueprint, new_phase_offset: float):
 	metatarsal_length = blueprint.metatarsal_length
 	toe_length = blueprint.toe_length
 	ankle_lift = blueprint.ankle_lift
+	natural_bend = blueprint.natural_bend
 	leg_type = blueprint.leg_type
 	
 	step_height = blueprint.step_height * max_length()
@@ -101,7 +104,7 @@ func update_from_blueprint(blueprint: LegBlueprint, new_phase_offset: float):
 func update_segment_lengths():
 	var helper = func update_segment(segment, segment_length, parent_length):
 		var mesh = segment.get_node("Mesh")
-		mesh.mesh.height = max(min_length, segment_length)
+		mesh.mesh.height = max(MIN_SEGMENT_LENGTH, segment_length)
 		mesh.mesh.radius = 0.015
 		mesh.position.y = -(segment_length/2)
 		segment.position.y = -parent_length
@@ -113,14 +116,27 @@ func update_segment_lengths():
 func max_length():
 	return femur_length + tibia_length + metatarsal_length * sin(ankle_lift)
 
+func resting_length():
+	return max_length() * clampf(1 - natural_bend, 0, 1)
+
+func min_length():
+	return max_length() * MIN_LEG_EXTENSION
+
 func move_foot_target():
 	var forward = -global_basis.z
 	
-	foot_target.global_position = global_position + (forward * (oscillator.skewed(osc_horizontal_bias) * step_length))
-	foot_target.global_position.y = max(0, oscillator.asymmetric(osc_vertical_bias, PI/2)) * step_height
+	var bottom = max(0, global_position.y - max_length())
 	
-	if foot_target.global_position.y > global_position.y:
-		foot_target.global_position.y = global_position.y
+	#foot_target.global_position = global_position + (forward * (oscillator.skewed(osc_horizontal_bias) * step_length))
+	foot_target.position = Vector3.FORWARD * oscillator.skewed(osc_horizontal_bias) * step_length
+	foot_target.global_position.y = bottom + max(0, oscillator.asymmetric(osc_vertical_bias, PI/2)) * step_height
+	#foot_target.position.y = -resting_length() + max(0, oscillator.asymmetric(osc_vertical_bias, PI/2)) * step_height
+	
+	if foot_target.position.length() > max_length():
+		foot_target.position = foot_target.position.normalized() * max_length()
+	
+	if foot_target.position.y > -min_length():
+		foot_target.position.y = -min_length()
 
 func is_planted():
 	return oscillator.asymmetric(osc_vertical_bias, PI/2) <= 0
