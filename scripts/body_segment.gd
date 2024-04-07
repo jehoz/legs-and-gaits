@@ -3,6 +3,8 @@ class_name BodySegment extends Node3D
 @export var radius: float = 0.2
 @export var length: float = 0.2
 
+const GRAVITY: float = 2.5
+
 var leg_l: Leg = null
 var leg_r: Leg = null
 
@@ -43,17 +45,29 @@ func _ready():
 	
 	position.y = resting_height
 
+var prev_error = 0
 func _process(delta):
 	if leg_l == null:
 		position.z = z_offset
 		return
 	
-	var y_target = resting_height - 0.05
-	if leg_l.is_load_phase() or leg_r.is_load_phase():
-		y_target = resting_height + 0.05
+	if (leg_l.is_planted() or leg_r.is_planted()) and position.y < resting_height:
+		var force = (atan(10 + leg_l.osc_vertical_bias) + PI) / (2 * PI)
+		force *= max(-leg_l.oscillator.asymmetric(leg_l.osc_vertical_bias),
+					 -leg_r.oscillator.asymmetric(leg_r.osc_vertical_bias))
+		
+		var error = resting_height - position.y
+		
+		y_velocity += (500.0 * error) * delta * force
+		y_velocity /= 2.0
+		prev_error = error
 	
-	var error = y_target - position.y
-	y_velocity = 1.25 * error - 0.75 * (error - y_velocity)
+	y_velocity -= GRAVITY * delta
 	
 	position.z = z_offset
 	position.y += y_velocity * delta
+	
+	# don't fall through the ground
+	if position.y < radius:
+		position.y = radius
+		y_velocity = 0

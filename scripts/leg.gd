@@ -114,15 +114,19 @@ func max_length():
 	return femur_length + tibia_length + metatarsal_length * sin(ankle_lift)
 
 func move_foot_target():
-	#var step_height = max_length() * 0.125
-	#var step_distance = step_height * 2.0
 	var forward = -global_basis.z
 	
 	foot_target.global_position = global_position + (forward * (oscillator.skewed(osc_horizontal_bias) * step_length))
 	foot_target.global_position.y = max(0, oscillator.asymmetric(osc_vertical_bias, PI/2)) * step_height
+	
+	if foot_target.global_position.y > global_position.y:
+		foot_target.global_position.y = global_position.y
+
+func is_planted():
+	return oscillator.asymmetric(osc_vertical_bias, PI/2) <= 0
 
 func is_load_phase():
-	return foot_target.global_position.y <= 0 and foot_target.position.z > 0
+	return is_planted() and foot_target.position.z > 0
 
 func solve_ik():
 	var forward = -global_basis.z
