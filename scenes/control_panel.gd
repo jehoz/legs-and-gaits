@@ -26,7 +26,7 @@ const MAX_NATURAL_BEND: float = 0.75
 @export var gait_speed_slider: Slider
 
 const MIN_GAIT_SPEED: float = 0
-const MAX_GAIT_SPEED: float = 10
+const MAX_GAIT_SPEED: float = 20
 
 @export var front_back_phase_offset_slider: Slider
 @export var left_right_phase_offset_slider: Slider
