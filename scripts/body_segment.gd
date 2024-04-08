@@ -52,8 +52,9 @@ func _process(delta):
 		return
 	
 	# twist body segments with leg movement
-	var foot_diff = leg_r.foot_target.global_position - leg_l.foot_target.global_position
-	var twist = atan(foot_diff.z / foot_diff.x)
+	var foot_diff = leg_l.foot_target.global_position - leg_r.foot_target.global_position
+	foot_diff = Vector2(foot_diff.x, foot_diff.z).normalized()
+	var twist = atan2(foot_diff.y, foot_diff.x)
 	var look_target = global_position + (-get_parent_node_3d().global_basis.z)
 	look_at(look_target, global_basis.y)
 	rotate_y(-twist * 0.1)
