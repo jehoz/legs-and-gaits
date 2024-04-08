@@ -16,16 +16,16 @@ func _process(delta):
 func sine(phase_offset: float = 0):
 	return sin(elapsed_seconds + phase + phase_offset)
 
-func skewed(skew: float, phase_offset: float = 0):
-	if skew == 0:
+func bias_slope(bias: float, phase_offset: float = 0):
+	if bias == 0:
 		return self.sine()
 	var x = elapsed_seconds + phase + phase_offset
-	skew = clamp(skew, -1.0, 1.0)
-	return (1.0 / skew) * atan2(skew * sin(x), 1.0 - skew * cos(x))
+	var k = (2 * atan(bias)) / PI
+	return (1.0 / k) * atan2(k * sin(x), 1.0 - k * cos(x))
 
-func asymmetric(bias: float, phase_offset: float = 0):
+func bias_peak(bias: float, phase_offset: float = 0):
 	if bias == 0:
 		return self.sine()
 	var x =  elapsed_seconds + phase + phase_offset
-	var k = pow(2, -bias)
+	var k = exp(bias)
 	return (2.0 * (pow(k, sin(x) + 1.0) - 1.0)) / (pow(k, 2) - 1.0) - 1.0

@@ -12,8 +12,8 @@ const MIN_LEG_EXTENSION: float = 0.2
 
 @export var step_height: float = 0.125
 @export var step_length: float = 0.25
-@export var osc_vertical_bias: float = -1.0
-@export var osc_horizontal_bias: float = 0.5
+@export var osc_vertical_bias: float = 1.0
+@export var osc_horizontal_bias: float = 1.0
 
 @export var leg_type: LegBlueprint.LegType = LegBlueprint.LegType.LEG_BACK
 
@@ -130,8 +130,8 @@ func move_foot_target():
 	var bottom = max(0, global_position.y - max_length())
 	
 	#foot_target.global_position = global_position + (forward * (oscillator.skewed(osc_horizontal_bias) * step_length))
-	foot_target.position = Vector3.FORWARD * oscillator.skewed(osc_horizontal_bias) * step_length
-	foot_target.global_position.y = bottom + max(0, oscillator.asymmetric(osc_vertical_bias, PI/2)) * step_height
+	foot_target.position = Vector3.FORWARD * oscillator.bias_slope(osc_horizontal_bias) * step_length
+	foot_target.global_position.y = bottom + max(0, oscillator.bias_peak(osc_vertical_bias, PI/2)) * step_height
 	#foot_target.position.y = -resting_length() + max(0, oscillator.asymmetric(osc_vertical_bias, PI/2)) * step_height
 	
 	if foot_target.position.length() > max_length():
@@ -140,7 +140,7 @@ func move_foot_target():
 		foot_target.position = foot_target.position.normalized() * max_length()
 
 func is_planted():
-	return oscillator.asymmetric(osc_vertical_bias, PI/2) <= 0
+	return oscillator.bias_peak(osc_vertical_bias, PI/2) <= 0
 
 func is_load_phase():
 	return is_planted() and foot_target.position.z > 0

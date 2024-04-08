@@ -40,15 +40,10 @@ const MAX_PHASE_OFFSET: float = PI
 const MIN_STEP_SIZE: float = 0
 const MAX_STEP_SIZE: float = 1
 
-@export var up_down_bias_slider: Slider
+@export var swing_stance_bias_slider: Slider
 
-const MIN_VERTICAL_BIAS: float = -10
-const MAX_VERTICAL_BIAS: float = 10
-
-@export var front_back_bias_slider: Slider
-
-const MIN_HORIZONTAL_BIAS: float = -1
-const MAX_HORIZONTAL_BIAS: float = 1
+const MIN_OSCILLATOR_BIAS: float = -7
+const MAX_OSCILLATOR_BIAS: float = 7
 
 func _ready():
 	var bp: CreatureBlueprint = creature.blueprint
@@ -120,15 +115,10 @@ func _ready():
 	step_length_slider.min_value = MIN_STEP_SIZE
 	step_length_slider.value = bp.step_length
 	
-	up_down_bias_slider.step = 0.001
-	up_down_bias_slider.max_value = MAX_VERTICAL_BIAS
-	up_down_bias_slider.min_value = MIN_VERTICAL_BIAS
-	up_down_bias_slider.value = bp.osc_vertical_bias
-	
-	front_back_bias_slider.step = 0.001
-	front_back_bias_slider.max_value = MAX_HORIZONTAL_BIAS
-	front_back_bias_slider.min_value = MIN_HORIZONTAL_BIAS
-	front_back_bias_slider.value = bp.osc_horizontal_bias
+	swing_stance_bias_slider.step = 0.001
+	swing_stance_bias_slider.max_value = MAX_OSCILLATOR_BIAS
+	swing_stance_bias_slider.min_value = MIN_OSCILLATOR_BIAS
+	swing_stance_bias_slider.value = bp.oscillator_bias
 	
 	for slider in [
 			front_femur_slider, front_tibia_slider, 
@@ -140,7 +130,7 @@ func _ready():
 			gait_speed_slider, front_back_phase_offset_slider, 
 			left_right_phase_offset_slider,
 			step_height_slider, step_length_slider,
-			up_down_bias_slider, front_back_bias_slider]:
+			swing_stance_bias_slider]:
 		slider.value_changed.connect(update_blueprint)
 
 func update_blueprint(value):
@@ -164,8 +154,7 @@ func update_blueprint(value):
 	creature.blueprint.speed = gait_speed_slider.value
 	creature.blueprint.step_height = step_height_slider.value
 	creature.blueprint.step_length = step_length_slider.value
-	creature.blueprint.osc_vertical_bias = up_down_bias_slider.value
-	creature.blueprint.osc_horizontal_bias = front_back_bias_slider.value
+	creature.blueprint.oscillator_bias = swing_stance_bias_slider.value
 	
 	creature.blueprint.leg_pair_phase_difference = front_back_phase_offset_slider.value
 	creature.blueprint.leg_side_phase_difference = left_right_phase_offset_slider.value

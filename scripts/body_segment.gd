@@ -60,8 +60,8 @@ func _process(delta):
 	rotate_y(-twist * 0.1)
 	
 	# upward force applied by leg proportional to step
-	var leg_force = max(-leg_l.oscillator.asymmetric(leg_l.osc_vertical_bias, PI/2),
-					 	-leg_r.oscillator.asymmetric(leg_r.osc_vertical_bias, PI/2))
+	var leg_force = max(-leg_l.oscillator.bias_peak(leg_l.osc_vertical_bias, PI/2),
+					 	-leg_r.oscillator.bias_peak(leg_r.osc_vertical_bias, PI/2))
 	# this just makes the walk animaton more natural looking
 	var target_height = resting_height + leg_force * leg_l.max_length() * 0.1
 	

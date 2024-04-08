@@ -43,8 +43,7 @@ leg_pair_phase_difference = 1.5708
 leg_side_phase_difference = 3.14159
 step_height = 0.125
 step_length = 0.25
-osc_vertical_bias = -0.735
-osc_horizontal_bias = 0.435
+oscillator_bias = 1.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dcppm"]
 albedo_color = Color(0.160784, 0.101961, 0.0705882, 1)
@@ -100,8 +99,10 @@ anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -240.0
+grow_horizontal = 0
+grow_vertical = 2
 
-[node name="Panel" type="Panel" parent="CanvasLayer/Control" node_paths=PackedStringArray("creature", "front_femur_slider", "front_tibia_slider", "front_metatarsal_slider", "front_toe_slider", "front_ankle_lift_slider", "front_natural_bend_slider", "rear_femur_slider", "rear_tibia_slider", "rear_metatarsal_slider", "rear_toe_slider", "rear_ankle_lift_slider", "rear_natural_bend_slider", "gait_speed_slider", "front_back_phase_offset_slider", "left_right_phase_offset_slider", "step_height_slider", "step_length_slider", "up_down_bias_slider", "front_back_bias_slider")]
+[node name="Panel" type="Panel" parent="CanvasLayer/Control" node_paths=PackedStringArray("creature", "front_femur_slider", "front_tibia_slider", "front_metatarsal_slider", "front_toe_slider", "front_ankle_lift_slider", "front_natural_bend_slider", "rear_femur_slider", "rear_tibia_slider", "rear_metatarsal_slider", "rear_toe_slider", "rear_ankle_lift_slider", "rear_natural_bend_slider", "gait_speed_slider", "front_back_phase_offset_slider", "left_right_phase_offset_slider", "step_height_slider", "step_length_slider", "swing_stance_bias_slider")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -129,8 +130,7 @@ front_back_phase_offset_slider = NodePath("ScrollContainer/MarginContainer/VBoxC
 left_right_phase_offset_slider = NodePath("ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer/LeftRightPhaseOffsetSlider")
 step_height_slider = NodePath("ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer/StepHeightSlider")
 step_length_slider = NodePath("ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer/StepLengthSlider")
-up_down_bias_slider = NodePath("ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer/UpDownBiasSlider")
-front_back_bias_slider = NodePath("ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer/FrontBackBiasSlider")
+swing_stance_bias_slider = NodePath("ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer/SwingStanceBiasSlider")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/Control/Panel"]
 layout_mode = 1
@@ -334,6 +334,15 @@ text = "Left/Right Phase Offset"
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
+[node name="SwingStanceBiasLabel" type="RichTextLabel" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+text = "Swing/Stance Bias"
+
+[node name="SwingStanceBiasSlider" type="HSlider" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+
 [node name="StepHeightLabel" type="RichTextLabel" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
@@ -343,29 +352,11 @@ text = "Step Height"
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
-[node name="UpDownBiasLabel" type="RichTextLabel" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
-custom_minimum_size = Vector2(0, 28)
-layout_mode = 2
-text = "Step Up/Down Bias"
-
-[node name="UpDownBiasSlider" type="HSlider" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
-custom_minimum_size = Vector2(0, 28)
-layout_mode = 2
-
 [node name="StepLengthLabel" type="RichTextLabel" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 text = "Step Length"
 
 [node name="StepLengthSlider" type="HSlider" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
-custom_minimum_size = Vector2(0, 28)
-layout_mode = 2
-
-[node name="FrontBackBiasLabel" type="RichTextLabel" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
-custom_minimum_size = Vector2(0, 28)
-layout_mode = 2
-text = "Step Front/Back Bias"
-
-[node name="FrontBackBiasSlider" type="HSlider" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2

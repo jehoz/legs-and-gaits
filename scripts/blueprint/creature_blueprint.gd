@@ -20,8 +20,7 @@ class_name CreatureBlueprint extends Resource
 
 @export var step_height = 0.125
 @export var step_length = 0.25
-@export var osc_vertical_bias = -1.0
-@export var osc_horizontal_bias = 0.5
+@export var oscillator_bias = 1.0
 
 ## propagates gait values to leg blueprints
 func update_legs():
@@ -32,8 +31,8 @@ func update_legs():
 		leg_bp.speed = speed
 		leg_bp.step_height = step_height
 		leg_bp.step_length = step_length
-		leg_bp.osc_vertical_bias = osc_vertical_bias
-		leg_bp.osc_horizontal_bias = osc_horizontal_bias
+		leg_bp.osc_vertical_bias = oscillator_bias
+		leg_bp.osc_horizontal_bias = oscillator_bias
 		
 		leg_bp.side_phase_difference = leg_side_phase_difference
 	
