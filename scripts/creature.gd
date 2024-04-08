@@ -9,6 +9,7 @@ func _enter_tree():
 		return
 	
 	var body_ik_solver = BodyIKSolver.new()
+	body_ik_solver.body_length = blueprint.body_length
 	add_child(body_ik_solver)
 	
 	for i in range(blueprint.num_body_segments):

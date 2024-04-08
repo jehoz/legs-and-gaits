@@ -7,18 +7,31 @@ class_name BodyIKSolver extends Node
 # they interpolate between the independent segments as smoothly as possible.
 var segments: Array[BodySegment] = []
 
-func _process(_delta: float):
-	# very simple stupid temporary implementation
-	var y0 = segments[0].position.y
-	var y1 = segments[-1].position.y
-	var z0 = segments[0].z_offset
-	var z1 = segments[-1].z_offset
-	for i in range(1, segments.size()-1):
-		var segment = segments[i]
-		var z_percent = abs(segment.z_offset - z0) / abs(z1 - z0)
-		segment.position.y = y0 * (1 - z_percent) + y1 * z_percent
-	for i in range(segments.size()-1):
-		segments[i+1].look_at(segments[i].global_position, Vector3.UP)
+var body_length: float = 1.0
 
-func error(angles: Array[Vector3]):
-	pass
+func _process(_delta: float):
+	# not "true" IK, but repositions and orients each body segment smoothly 
+	# between the front and back using a bezier curve
+	
+	var control_points = [
+		segments[0].global_position,
+		segments[0].global_position + segments[0].global_basis.z * (body_length / 2),
+		segments[-1].global_position + -segments[0].global_basis.z * (body_length / 2),
+		segments[-1].global_position
+	]
+	var n = control_points.size()
+	
+	for i in range(1, segments.size()-1):
+		var t = float(i) / segments.size()
+		var curve_pt = Vector3(0, 0, 0)
+		var w = [1, 3, 3, 1]
+		for j in range(n):
+			curve_pt.x += control_points[j].x * pow(1-t, (n-1)-j) * pow(t, j) * w[j]
+			curve_pt.y += control_points[j].y * pow(1-t, (n-1)-j) * pow(t, j) * w[j]
+			curve_pt.z += control_points[j].z * pow(1-t, (n-1)-j) * pow(t, j) * w[j]
+		segments[i].global_position = curve_pt
+		
+	for i in range(1, segments.size()-1):
+		var direction = segments[i+1].global_position - segments[i-1].global_position
+		var look_target = segments[i].global_position + direction
+		segments[i].look_at(look_target, Vector3.UP)
