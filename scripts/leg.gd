@@ -114,10 +114,12 @@ func update_segment_lengths():
 	helper.call(toe, toe_length, metatarsal_length)
 
 func max_length():
-	return femur_length + tibia_length + metatarsal_length * sin(ankle_lift)
+	var a = metatarsal_length * sin(ankle_lift)
+	var b = metatarsal_length * cos(ankle_lift)
+	return sqrt(pow(femur_length + tibia_length, 2) - pow(b, 2)) + a
 
 func resting_length():
-	return max_length() * clampf(1 - natural_bend, 0, 1)
+	return max_length() * clampf(1 - natural_bend, MIN_LEG_EXTENSION, 1)
 
 func min_length():
 	return max_length() * MIN_LEG_EXTENSION
@@ -151,8 +153,7 @@ func solve_ik():
 	# depending on how high the heel is raised
 	# for fully plantigrade feet the target is the heel of the foot, for fully
 	# ungiligrade feet the target is the ball of the foot
-	var elev_percent = clamp(1.0 - (ankle_lift / (PI/2)), 0.0, 1.0)
-	var ball_offset = elev_percent * (cos(ankle_lift) * metatarsal_length) * forward
+	var ball_offset = (cos(ankle_lift) * metatarsal_length) * forward
 	var ball_pos = foot_target.global_position + ball_offset
 	
 	# foot rotates slightly as the leg moves forward and backward, modifying the
