@@ -164,6 +164,9 @@ func solve_ik():
 	var xz_len = leg_xz.length() * sign(fw_xz.dot(leg_xz))
 	var delta_angle = atan(xz_len / hip_to_ball.y)
 	var _ankle_lift = ankle_lift + delta_angle
+	if ball_pos.y + metatarsal_length * sin(_ankle_lift) < 0:
+		_ankle_lift = asin(-ball_pos.y / metatarsal_length)
+		delta_angle = _ankle_lift - ankle_lift
 	var toe_pos = ball_pos + (Quaternion(left, -min(0, delta_angle)) * forward * toe_length)
 	
 	# ankle position is computed from ball position and heel elevation
