@@ -8,7 +8,7 @@
 
 [sub_resource type="Curve" id="Curve_ed4xn"]
 max_value = 0.2
-_data = [Vector2(0, 0.151648), 0.0, 0.0, 0, 0, Vector2(0.502222, 0.140659), 0.0, 0.0, 0, 0, Vector2(1, 0.173626), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 0.101099), 0.0, 0.0, 0, 0, Vector2(0.691943, 0.120879), 0.0, 0.0, 0, 0, Vector2(1, 0.101099), 0.0, 0.0, 0, 0]
 point_count = 3
 
 [sub_resource type="Resource" id="Resource_vg5k8"]
@@ -35,7 +35,7 @@ natural_bend = 0.15
 script = ExtResource("4_kntse")
 body_length = 1.0
 body_shape = SubResource("Curve_ed4xn")
-num_body_segments = 8
+num_body_segments = 12
 front_leg_blueprint = SubResource("Resource_vg5k8")
 rear_leg_blueprint = SubResource("Resource_7scyc")
 speed = 3.5
