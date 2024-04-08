@@ -16,7 +16,7 @@ func _process(_delta: float):
 	var control_points = [
 		segments[0].global_position,
 		segments[0].global_position + segments[0].global_basis.z * (body_length / 2),
-		segments[-1].global_position + -segments[0].global_basis.z * (body_length / 2),
+		segments[-1].global_position + -segments[-1].global_basis.z * (body_length / 2),
 		segments[-1].global_position
 	]
 	var n = control_points.size()
