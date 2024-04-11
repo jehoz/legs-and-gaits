@@ -59,29 +59,12 @@ func _process(delta):
 	look_at(look_target, global_basis.y)
 	rotate_y(-twist * 0.1)
 	
-	# upward force applied by leg proportional to step
-	var leg_force = max(-leg_l.oscillator.bias_peak(leg_l.osc_vertical_bias, PI/2),
-					 	-leg_r.oscillator.bias_peak(leg_r.osc_vertical_bias, PI/2))
-	# this just makes the walk animaton more natural looking
-	var target_height = resting_height + leg_force * leg_l.max_length() * 0.1
-	
-	# apply upward acceleration to body segment when leg is planted
-	if (leg_l.is_planted() or leg_r.is_planted()) and position.y < target_height:
-		var error = target_height - position.y
-		
-		var p_coeff = 75 + pow(2, leg_l.osc_vertical_bias) * leg_force * 0.5
-		var d_coeff = 10.0
-		
-		y_velocity += (p_coeff * error - d_coeff * (error - prev_error)) * delta
-		y_velocity /= 2.0
-		prev_error = error
-	
-	y_velocity -= GRAVITY * delta
-	
-	position.y += y_velocity * delta
-	
-	# don't fall through the ground
-	var bottom = max(radius, leg_l.min_length())
-	if position.y < bottom:
-		position.y = bottom
-		y_velocity = 0
+	# bob up and down
+	var bounce_amt = 0.1 - 0.01 * leg_l.osc_vertical_bias
+	var bounce_off = 0.15
+	var avg_leg_osc = (
+		leg_l.oscillator.bias_slope(leg_l.osc_vertical_bias / 2, bounce_off) +
+		leg_r.oscillator.bias_slope(leg_r.osc_vertical_bias / 2, bounce_off)
+		) / 2
+	var y = leg_l.resting_length() - bounce_amt * avg_leg_osc
+	global_position.y = y
