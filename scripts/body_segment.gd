@@ -3,14 +3,11 @@ class_name BodySegment extends Node3D
 @export var radius: float = 0.2
 @export var length: float = 0.2
 
-const GRAVITY: float = 2.5
-
 var leg_l: Leg = null
 var leg_r: Leg = null
 
 var resting_height: float = 0
 var z_offset: float = 0
-var y_velocity: float = 0
 
 func _init(radius: float, length: float, z_offset: float):
 	self.radius = radius
@@ -54,7 +51,9 @@ func _process(delta):
 	# twist body segments with leg movement
 	var foot_diff = leg_l.foot_target.global_position - leg_r.foot_target.global_position
 	foot_diff = Vector2(foot_diff.x, foot_diff.z).normalized()
+	
 	var twist = atan2(foot_diff.y, foot_diff.x)
+	
 	var look_target = global_position + (-get_parent_node_3d().global_basis.z)
 	look_at(look_target, global_basis.y)
 	rotate_y(-twist * 0.1)
