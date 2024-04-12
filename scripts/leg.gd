@@ -51,6 +51,7 @@ func _process(delta):
 	
 	move_foot_target()
 	solve_ik()
+	move_toe(delta)
 
 func regenerate_segments():
 	if femur != null:
@@ -129,10 +130,8 @@ func move_foot_target():
 	
 	var bottom = max(0, global_position.y - max_length())
 	
-	#foot_target.global_position = global_position + (forward * (oscillator.skewed(osc_horizontal_bias) * step_length))
 	foot_target.position = Vector3.FORWARD * oscillator.bias_slope(osc_horizontal_bias) * step_length
 	foot_target.global_position.y = bottom + max(0, oscillator.bias_peak(osc_vertical_bias, PI/2)) * step_height
-	#foot_target.position.y = -resting_length() + max(0, oscillator.asymmetric(osc_vertical_bias, PI/2)) * step_height
 	
 	if foot_target.position.length() > max_length():
 		foot_target.position = foot_target.position.normalized() * max_length()
@@ -141,9 +140,6 @@ func move_foot_target():
 
 func is_planted():
 	return oscillator.bias_peak(osc_vertical_bias, PI/2) <= 0
-
-func is_load_phase():
-	return is_planted() and foot_target.position.z > 0
 
 func solve_ik():
 	var forward = -global_basis.z
@@ -162,12 +158,9 @@ func solve_ik():
 	var leg_xz = Vector2(hip_to_ball.x, hip_to_ball.z)
 	var fw_xz = Vector2(forward.x, forward.z)
 	var xz_len = leg_xz.length() * sign(fw_xz.dot(leg_xz))
-	var delta_angle = atan(xz_len / hip_to_ball.y)
-	var _ankle_lift = ankle_lift + delta_angle
+	var _ankle_lift = ankle_lift + atan(xz_len / hip_to_ball.y)
 	if ball_pos.y + metatarsal_length * sin(_ankle_lift) < 0:
 		_ankle_lift = asin(-ball_pos.y / metatarsal_length)
-		delta_angle = _ankle_lift - ankle_lift
-	var toe_pos = ball_pos + (Quaternion(left, -min(0, delta_angle)) * forward * toe_length)
 	
 	# ankle position is computed from ball position and heel elevation
 	var a_off_xz = metatarsal_length * cos(_ankle_lift) * -forward
@@ -189,9 +182,9 @@ func solve_ik():
 	var knee_pos = global_position + Quaternion(left, gamma) * knee_offset
 	
 	var prev = get_global_transform()
-	var bones = [femur, tibia, metatarsal, toe]
-	var joints = [knee_pos, ankle_pos, ball_pos, toe_pos]
-	for i in range(4):
+	var bones = [femur, tibia, metatarsal]
+	var joints = [knee_pos, ankle_pos, ball_pos]
+	for i in range(bones.size()):
 		var bone: Node3D = bones[i]
 		var joint_pos: Vector3 = joints[i]
 		var from: Vector3 = -prev.basis.y
@@ -203,3 +196,15 @@ func solve_ik():
 		bone.global_position = prev.origin
 		prev = bone.get_global_transform()
 		prev.origin = joint_pos
+
+func move_toe(delta: float):
+	var current_angle = (-metatarsal.global_basis.y).angle_to(-toe.global_basis.y)
+	
+	var target_angle: float
+	if is_planted():
+		target_angle = (-metatarsal.global_basis.y).angle_to(-global_basis.z)
+	else:
+		target_angle = ankle_lift
+	
+	toe.rotate_x((target_angle - current_angle) * delta * 15)
+
