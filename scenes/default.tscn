@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://scripts/blueprint/leg_blueprint.gd" id="2_sau8g"]
 [ext_resource type="Script" path="res://scripts/blueprint/creature_blueprint.gd" id="4_kntse"]
 [ext_resource type="Texture2D" uid="uid://uydeaoymddl7" path="res://assets/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="5_8pggb"]
-[ext_resource type="Script" path="res://scenes/control_panel.gd" id="6_3ibm0"]
+[ext_resource type="Script" path="res://scripts/ui/control_panel.gd" id="6_3ibm0"]
 
 [sub_resource type="Curve" id="Curve_ed4xn"]
 max_value = 0.2
