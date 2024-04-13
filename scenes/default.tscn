@@ -1,10 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://coip7ho7vu6cf"]
+[gd_scene load_steps=16 format=3 uid="uid://coip7ho7vu6cf"]
 
 [ext_resource type="Script" path="res://scripts/creature.gd" id="1_e1xh8"]
 [ext_resource type="Script" path="res://scripts/blueprint/leg_blueprint.gd" id="2_sau8g"]
 [ext_resource type="Script" path="res://scripts/blueprint/creature_blueprint.gd" id="4_kntse"]
 [ext_resource type="Texture2D" uid="uid://uydeaoymddl7" path="res://assets/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="5_8pggb"]
 [ext_resource type="Script" path="res://scripts/ui/control_panel.gd" id="6_3ibm0"]
+[ext_resource type="Script" path="res://scripts/ui/leg_preset_button.gd" id="6_nay67"]
 
 [sub_resource type="Curve" id="Curve_ed4xn"]
 max_value = 0.2
@@ -360,3 +361,114 @@ text = "Step Length"
 [node name="StepLengthSlider" type="HSlider" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
+
+[node name="Control2" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 149.0
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Control2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control2/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control2/Panel/MarginContainer"]
+layout_mode = 2
+
+[node name="LegPresetsHeader" type="RichTextLabel" parent="CanvasLayer/Control2/Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+bbcode_enabled = true
+text = "[b]Leg Presets[/b]"
+
+[node name="PlantigradeButton" type="Button" parent="CanvasLayer/Control2/Panel/MarginContainer/VBoxContainer" node_paths=PackedStringArray("control_panel")]
+layout_mode = 2
+text = "Plantigrade"
+script = ExtResource("6_nay67")
+control_panel = NodePath("../../../../../Control/Panel")
+
+[node name="DigitigradeButton" type="Button" parent="CanvasLayer/Control2/Panel/MarginContainer/VBoxContainer" node_paths=PackedStringArray("control_panel")]
+layout_mode = 2
+text = "Digitigrade"
+script = ExtResource("6_nay67")
+front_femur_length = 0.375
+front_tibia_length = 0.392
+front_metatarsal_length = 0.193
+front_toe_length = 0.096
+front_ankle_lift = 1.5
+front_natural_bend = 0.24
+rear_femur_length = 0.419
+rear_tibia_length = 0.411
+rear_metatarsal_length = 0.259
+rear_toe_length = 0.135
+rear_ankle_lift = 0.996
+rear_natural_bend = 0.197
+control_panel = NodePath("../../../../../Control/Panel")
+
+[node name="UnguligradeButton" type="Button" parent="CanvasLayer/Control2/Panel/MarginContainer/VBoxContainer" node_paths=PackedStringArray("control_panel")]
+layout_mode = 2
+text = "Unguligrade"
+script = ExtResource("6_nay67")
+front_femur_length = 0.327
+front_tibia_length = 0.355
+front_metatarsal_length = 0.32
+front_toe_length = 0.01
+front_ankle_lift = 1.57
+front_natural_bend = 0.095
+rear_femur_length = 0.359
+rear_tibia_length = 0.398
+rear_metatarsal_length = 0.398
+rear_toe_length = 0.01
+rear_ankle_lift = 1.57
+rear_natural_bend = 0.14
+control_panel = NodePath("../../../../../Control/Panel")
+
+[node name="HSeparator" type="HSeparator" parent="CanvasLayer/Control2/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="GaitPresetsHeader" type="RichTextLabel" parent="CanvasLayer/Control2/Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+bbcode_enabled = true
+text = "[b]Gait Presets[/b]"
+
+[node name="WalkButton" type="Button" parent="CanvasLayer/Control2/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Walk
+"
+
+[node name="TrotButton" type="Button" parent="CanvasLayer/Control2/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Trot"
+
+[node name="PaceButton" type="Button" parent="CanvasLayer/Control2/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Pace"
+
+[node name="BoundButton" type="Button" parent="CanvasLayer/Control2/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Bound
+"
+
+[node name="GallopButton" type="Button" parent="CanvasLayer/Control2/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Gallop
+"
