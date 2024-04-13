@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://coip7ho7vu6cf"]
+[gd_scene load_steps=17 format=3 uid="uid://coip7ho7vu6cf"]
 
 [ext_resource type="Script" path="res://scripts/creature.gd" id="1_e1xh8"]
 [ext_resource type="Script" path="res://scripts/blueprint/leg_blueprint.gd" id="2_sau8g"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://uydeaoymddl7" path="res://assets/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="5_8pggb"]
 [ext_resource type="Script" path="res://scripts/ui/control_panel.gd" id="6_3ibm0"]
 [ext_resource type="Script" path="res://scripts/ui/leg_preset_button.gd" id="6_nay67"]
+[ext_resource type="Script" path="res://scripts/ui/gait_preset_button.gd" id="7_1iott"]
 
 [sub_resource type="Curve" id="Curve_ed4xn"]
 max_value = 0.2
@@ -450,25 +451,64 @@ layout_mode = 2
 bbcode_enabled = true
 text = "[b]Gait Presets[/b]"
 
-[node name="WalkButton" type="Button" parent="CanvasLayer/Control2/Panel/MarginContainer/VBoxContainer"]
+[node name="WalkButton" type="Button" parent="CanvasLayer/Control2/Panel/MarginContainer/VBoxContainer" node_paths=PackedStringArray("control_panel")]
 layout_mode = 2
 text = "Walk
 "
+script = ExtResource("7_1iott")
+gait_speed = 5.0
+front_back_phase_offset = 1.5
+left_right_phase_offset = 3.14
+step_height = 0.125
+swing_stance_bias = 1.0
+control_panel = NodePath("../../../../../Control/Panel")
 
-[node name="TrotButton" type="Button" parent="CanvasLayer/Control2/Panel/MarginContainer/VBoxContainer"]
+[node name="TrotButton" type="Button" parent="CanvasLayer/Control2/Panel/MarginContainer/VBoxContainer" node_paths=PackedStringArray("control_panel")]
 layout_mode = 2
 text = "Trot"
+script = ExtResource("7_1iott")
+gait_speed = 7.0
+front_back_phase_offset = 3.142
+left_right_phase_offset = 3.142
+step_height = 0.2
+step_length = 0.3
+swing_stance_bias = -3.7
+control_panel = NodePath("../../../../../Control/Panel")
 
-[node name="PaceButton" type="Button" parent="CanvasLayer/Control2/Panel/MarginContainer/VBoxContainer"]
+[node name="PaceButton" type="Button" parent="CanvasLayer/Control2/Panel/MarginContainer/VBoxContainer" node_paths=PackedStringArray("control_panel")]
 layout_mode = 2
 text = "Pace"
+script = ExtResource("7_1iott")
+gait_speed = 8.0
+front_back_phase_offset = 0.0
+left_right_phase_offset = 3.142
+step_height = 0.2
+step_length = 0.3
+swing_stance_bias = -2.7
+control_panel = NodePath("../../../../../Control/Panel")
 
-[node name="BoundButton" type="Button" parent="CanvasLayer/Control2/Panel/MarginContainer/VBoxContainer"]
+[node name="BoundButton" type="Button" parent="CanvasLayer/Control2/Panel/MarginContainer/VBoxContainer" node_paths=PackedStringArray("control_panel")]
 layout_mode = 2
 text = "Bound
 "
+script = ExtResource("7_1iott")
+gait_speed = 11.0
+front_back_phase_offset = 3.142
+left_right_phase_offset = 0.0
+step_height = 0.28
+step_length = 0.47
+swing_stance_bias = -1.6
+control_panel = NodePath("../../../../../Control/Panel")
 
-[node name="GallopButton" type="Button" parent="CanvasLayer/Control2/Panel/MarginContainer/VBoxContainer"]
+[node name="GallopButton" type="Button" parent="CanvasLayer/Control2/Panel/MarginContainer/VBoxContainer" node_paths=PackedStringArray("control_panel")]
 layout_mode = 2
 text = "Gallop
 "
+script = ExtResource("7_1iott")
+gait_speed = 10.0
+front_back_phase_offset = 3.142
+left_right_phase_offset = 0.6
+step_height = 0.355
+step_length = 0.43
+swing_stance_bias = -3.0
+control_panel = NodePath("../../../../../Control/Panel")
