@@ -1,4 +1,4 @@
-extends Control
+class_name ControlPanel extends Control
 
 @export_group("Internal")
 @export var creature: Creature
@@ -17,8 +17,11 @@ extends Control
 @export var rear_ankle_lift_slider: Slider
 @export var rear_natural_bend_slider: Slider
 
-const MIN_SEGMENT_LENGTH: float = 0.001
-const MAX_SEGMENT_LENGTH: float = 1.0
+const MIN_SEGMENT_LENGTH: float = 0.1
+const MAX_SEGMENT_LENGTH: float = 0.75
+
+# toe can be much smaller than other leg segments
+const MIN_TOE_LENGTH: float = 0.01
 
 const MIN_NATURAL_BEND: float = 0.0
 const MAX_NATURAL_BEND: float = 0.75
@@ -63,11 +66,13 @@ func _ready():
 	front_femur_slider.value = front_leg.femur_length
 	front_tibia_slider.value = front_leg.tibia_length
 	front_metatarsal_slider.value = front_leg.metatarsal_length
+	front_toe_slider.min_value = MIN_TOE_LENGTH
 	front_toe_slider.value = front_leg.toe_length
 	
 	rear_femur_slider.value = rear_leg.femur_length
 	rear_tibia_slider.value = rear_leg.tibia_length
 	rear_metatarsal_slider.value = rear_leg.metatarsal_length
+	rear_toe_slider.min_value = MIN_TOE_LENGTH
 	rear_toe_slider.value = rear_leg.toe_length
 	
 	front_ankle_lift_slider.step = 0.001
