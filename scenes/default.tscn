@@ -94,7 +94,7 @@ shadow_enabled = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Control" type="Control" parent="CanvasLayer"]
+[node name="Sliders" type="Control" parent="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 11
 anchor_left = 1.0
@@ -104,7 +104,7 @@ offset_left = -240.0
 grow_horizontal = 0
 grow_vertical = 2
 
-[node name="Panel" type="Panel" parent="CanvasLayer/Control" node_paths=PackedStringArray("creature", "front_femur_slider", "front_tibia_slider", "front_metatarsal_slider", "front_toe_slider", "front_ankle_lift_slider", "front_natural_bend_slider", "rear_femur_slider", "rear_tibia_slider", "rear_metatarsal_slider", "rear_toe_slider", "rear_ankle_lift_slider", "rear_natural_bend_slider", "gait_speed_slider", "front_back_phase_offset_slider", "left_right_phase_offset_slider", "step_height_slider", "step_length_slider", "swing_stance_bias_slider")]
+[node name="Panel" type="Panel" parent="CanvasLayer/Sliders" node_paths=PackedStringArray("creature", "front_femur_slider", "front_tibia_slider", "front_metatarsal_slider", "front_toe_slider", "front_ankle_lift_slider", "front_natural_bend_slider", "rear_femur_slider", "rear_tibia_slider", "rear_metatarsal_slider", "rear_toe_slider", "rear_ankle_lift_slider", "rear_natural_bend_slider", "gait_speed_slider", "front_back_phase_offset_slider", "left_right_phase_offset_slider", "step_height_slider", "step_length_slider", "swing_stance_bias_slider")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -134,7 +134,7 @@ step_height_slider = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Mar
 step_length_slider = NodePath("ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer/StepLengthSlider")
 swing_stance_bias_slider = NodePath("ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer/SwingStanceBiasSlider")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/Control/Panel"]
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/Sliders/Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -144,7 +144,7 @@ offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/Panel/ScrollContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Sliders/Panel/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -153,224 +153,224 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="FrontLegsHeader" type="RichTextLabel" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="FrontLegsHeader" type="RichTextLabel" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 bbcode_enabled = true
 text = "[b]Front Legs[/b]"
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_right = 8
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="FrontFemurLabel" type="RichTextLabel" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+[node name="FrontFemurLabel" type="RichTextLabel" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 text = "Femur"
 
-[node name="FrontFemurSlider" type="HSlider" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+[node name="FrontFemurSlider" type="HSlider" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
-[node name="FrontTibiaLabel" type="RichTextLabel" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+[node name="FrontTibiaLabel" type="RichTextLabel" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 text = "Tibia"
 
-[node name="FrontTibiaSlider" type="HSlider" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+[node name="FrontTibiaSlider" type="HSlider" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
-[node name="FrontMetatarsalLabel" type="RichTextLabel" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+[node name="FrontMetatarsalLabel" type="RichTextLabel" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 text = "Metatarsal"
 
-[node name="FrontMetatarsalSlider" type="HSlider" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+[node name="FrontMetatarsalSlider" type="HSlider" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
-[node name="FrontToeLabel" type="RichTextLabel" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+[node name="FrontToeLabel" type="RichTextLabel" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 text = "Toe"
 
-[node name="FrontToeSlider" type="HSlider" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+[node name="FrontToeSlider" type="HSlider" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
-[node name="FrontAnkleLiftLabel" type="RichTextLabel" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+[node name="FrontAnkleLiftLabel" type="RichTextLabel" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 text = "Ankle Lift"
 
-[node name="FrontAnkleLiftSlider" type="HSlider" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+[node name="FrontAnkleLiftSlider" type="HSlider" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
-[node name="FrontBendLabel" type="RichTextLabel" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+[node name="FrontBendLabel" type="RichTextLabel" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 text = "Natural Bend"
 
-[node name="FrontBendSlider" type="HSlider" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+[node name="FrontBendSlider" type="HSlider" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
-[node name="RearLegsHeader" type="RichTextLabel" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="RearLegsHeader" type="RichTextLabel" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 bbcode_enabled = true
 text = "[b]Rear Legs[/b]"
 
-[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_right = 8
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer2"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer2"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="RearFemurLabel" type="RichTextLabel" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+[node name="RearFemurLabel" type="RichTextLabel" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 text = "Femur"
 
-[node name="RearFemurSlider" type="HSlider" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+[node name="RearFemurSlider" type="HSlider" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
-[node name="RearTibiaLabel" type="RichTextLabel" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+[node name="RearTibiaLabel" type="RichTextLabel" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 text = "Tibia"
 
-[node name="RearTibiaSlider" type="HSlider" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+[node name="RearTibiaSlider" type="HSlider" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
-[node name="RearMetatarsalLabel" type="RichTextLabel" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+[node name="RearMetatarsalLabel" type="RichTextLabel" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 text = "Metatarsal"
 
-[node name="RearMetatarsalSlider" type="HSlider" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+[node name="RearMetatarsalSlider" type="HSlider" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
-[node name="RearToeLabel" type="RichTextLabel" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+[node name="RearToeLabel" type="RichTextLabel" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 text = "Toe"
 
-[node name="RearToeSlider" type="HSlider" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+[node name="RearToeSlider" type="HSlider" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
-[node name="RearAnkleLiftLabel" type="RichTextLabel" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+[node name="RearAnkleLiftLabel" type="RichTextLabel" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 text = "Ankle Lift"
 
-[node name="RearAnkleLiftSlider" type="HSlider" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+[node name="RearAnkleLiftSlider" type="HSlider" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
-[node name="RearBendLabel" type="RichTextLabel" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+[node name="RearBendLabel" type="RichTextLabel" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 text = "Natural Bend"
 
-[node name="RearBendSlider" type="HSlider" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+[node name="RearBendSlider" type="HSlider" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
-[node name="GaitHeader" type="RichTextLabel" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="GaitHeader" type="RichTextLabel" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 bbcode_enabled = true
 text = "[b]Gait[/b]"
 
-[node name="MarginContainer3" type="MarginContainer" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="MarginContainer3" type="MarginContainer" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_right = 8
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="SpeedLabel" type="RichTextLabel" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
+[node name="SpeedLabel" type="RichTextLabel" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 text = "Speed"
 
-[node name="SpeedSlider" type="HSlider" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
+[node name="SpeedSlider" type="HSlider" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
-[node name="FrontBackPhaseOffsetLabel" type="RichTextLabel" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
+[node name="FrontBackPhaseOffsetLabel" type="RichTextLabel" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 text = "Front/Back Phase Offset"
 
-[node name="FrontBackPhaseOffsetSlider" type="HSlider" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
+[node name="FrontBackPhaseOffsetSlider" type="HSlider" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
-[node name="LeftRightPhaseOffsetLabel" type="RichTextLabel" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
+[node name="LeftRightPhaseOffsetLabel" type="RichTextLabel" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 text = "Left/Right Phase Offset"
 
-[node name="LeftRightPhaseOffsetSlider" type="HSlider" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
+[node name="LeftRightPhaseOffsetSlider" type="HSlider" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
-[node name="SwingStanceBiasLabel" type="RichTextLabel" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
+[node name="SwingStanceBiasLabel" type="RichTextLabel" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 text = "Swing/Stance Bias"
 
-[node name="SwingStanceBiasSlider" type="HSlider" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
+[node name="SwingStanceBiasSlider" type="HSlider" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
-[node name="StepHeightLabel" type="RichTextLabel" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
+[node name="StepHeightLabel" type="RichTextLabel" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 text = "Step Height"
 
-[node name="StepHeightSlider" type="HSlider" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
+[node name="StepHeightSlider" type="HSlider" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
-[node name="StepLengthLabel" type="RichTextLabel" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
+[node name="StepLengthLabel" type="RichTextLabel" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 text = "Step Length"
 
-[node name="StepLengthSlider" type="HSlider" parent="CanvasLayer/Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
+[node name="StepLengthSlider" type="HSlider" parent="CanvasLayer/Sliders/Panel/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
-[node name="Control2" type="Control" parent="CanvasLayer"]
+[node name="Presets" type="Control" parent="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 9
 anchor_bottom = 1.0
 offset_right = 149.0
 grow_vertical = 2
 
-[node name="Panel" type="Panel" parent="CanvasLayer/Control2"]
+[node name="Panel" type="Panel" parent="CanvasLayer/Presets"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -378,7 +378,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control2/Panel"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Presets/Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -390,68 +390,68 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control2/Panel/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Presets/Panel/MarginContainer"]
 layout_mode = 2
 
-[node name="LegPresetsHeader" type="RichTextLabel" parent="CanvasLayer/Control2/Panel/MarginContainer/VBoxContainer"]
+[node name="LegPresetsHeader" type="RichTextLabel" parent="CanvasLayer/Presets/Panel/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 bbcode_enabled = true
 text = "[b]Leg Presets[/b]"
 
-[node name="PlantigradeButton" type="Button" parent="CanvasLayer/Control2/Panel/MarginContainer/VBoxContainer" node_paths=PackedStringArray("control_panel")]
+[node name="PlantigradeButton" type="Button" parent="CanvasLayer/Presets/Panel/MarginContainer/VBoxContainer" node_paths=PackedStringArray("control_panel")]
 layout_mode = 2
 text = "Plantigrade"
 script = ExtResource("6_nay67")
-control_panel = NodePath("../../../../../Control/Panel")
+control_panel = NodePath("../../../../../Sliders/Panel")
 
-[node name="DigitigradeButton" type="Button" parent="CanvasLayer/Control2/Panel/MarginContainer/VBoxContainer" node_paths=PackedStringArray("control_panel")]
+[node name="DigitigradeButton" type="Button" parent="CanvasLayer/Presets/Panel/MarginContainer/VBoxContainer" node_paths=PackedStringArray("control_panel")]
 layout_mode = 2
 text = "Digitigrade"
 script = ExtResource("6_nay67")
-front_femur_length = 0.375
-front_tibia_length = 0.392
-front_metatarsal_length = 0.193
-front_toe_length = 0.096
+front_femur_length = 0.413
+front_tibia_length = 0.431
+front_metatarsal_length = 0.212
+front_toe_length = 0.1
 front_ankle_lift = 1.5
 front_natural_bend = 0.24
-rear_femur_length = 0.419
-rear_tibia_length = 0.411
-rear_metatarsal_length = 0.259
-rear_toe_length = 0.135
+rear_femur_length = 0.461
+rear_tibia_length = 0.452
+rear_metatarsal_length = 0.285
+rear_toe_length = 0.12
 rear_ankle_lift = 0.996
 rear_natural_bend = 0.197
-control_panel = NodePath("../../../../../Control/Panel")
+control_panel = NodePath("../../../../../Sliders/Panel")
 
-[node name="UnguligradeButton" type="Button" parent="CanvasLayer/Control2/Panel/MarginContainer/VBoxContainer" node_paths=PackedStringArray("control_panel")]
+[node name="UnguligradeButton" type="Button" parent="CanvasLayer/Presets/Panel/MarginContainer/VBoxContainer" node_paths=PackedStringArray("control_panel")]
 layout_mode = 2
 text = "Unguligrade"
 script = ExtResource("6_nay67")
-front_femur_length = 0.327
-front_tibia_length = 0.355
-front_metatarsal_length = 0.32
+front_femur_length = 0.311
+front_tibia_length = 0.337
+front_metatarsal_length = 0.304
 front_toe_length = 0.01
 front_ankle_lift = 1.57
 front_natural_bend = 0.095
-rear_femur_length = 0.359
-rear_tibia_length = 0.398
-rear_metatarsal_length = 0.398
+rear_femur_length = 0.341
+rear_tibia_length = 0.378
+rear_metatarsal_length = 0.378
 rear_toe_length = 0.01
 rear_ankle_lift = 1.57
 rear_natural_bend = 0.14
-control_panel = NodePath("../../../../../Control/Panel")
+control_panel = NodePath("../../../../../Sliders/Panel")
 
-[node name="HSeparator" type="HSeparator" parent="CanvasLayer/Control2/Panel/MarginContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="CanvasLayer/Presets/Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="GaitPresetsHeader" type="RichTextLabel" parent="CanvasLayer/Control2/Panel/MarginContainer/VBoxContainer"]
+[node name="GaitPresetsHeader" type="RichTextLabel" parent="CanvasLayer/Presets/Panel/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 bbcode_enabled = true
 text = "[b]Gait Presets[/b]"
 
-[node name="WalkButton" type="Button" parent="CanvasLayer/Control2/Panel/MarginContainer/VBoxContainer" node_paths=PackedStringArray("control_panel")]
+[node name="WalkButton" type="Button" parent="CanvasLayer/Presets/Panel/MarginContainer/VBoxContainer" node_paths=PackedStringArray("control_panel")]
 layout_mode = 2
 text = "Walk
 "
@@ -461,9 +461,9 @@ front_back_phase_offset = 1.5
 left_right_phase_offset = 3.14
 step_height = 0.125
 swing_stance_bias = 1.0
-control_panel = NodePath("../../../../../Control/Panel")
+control_panel = NodePath("../../../../../Sliders/Panel")
 
-[node name="TrotButton" type="Button" parent="CanvasLayer/Control2/Panel/MarginContainer/VBoxContainer" node_paths=PackedStringArray("control_panel")]
+[node name="TrotButton" type="Button" parent="CanvasLayer/Presets/Panel/MarginContainer/VBoxContainer" node_paths=PackedStringArray("control_panel")]
 layout_mode = 2
 text = "Trot"
 script = ExtResource("7_1iott")
@@ -473,9 +473,9 @@ left_right_phase_offset = 3.142
 step_height = 0.2
 step_length = 0.3
 swing_stance_bias = -3.7
-control_panel = NodePath("../../../../../Control/Panel")
+control_panel = NodePath("../../../../../Sliders/Panel")
 
-[node name="PaceButton" type="Button" parent="CanvasLayer/Control2/Panel/MarginContainer/VBoxContainer" node_paths=PackedStringArray("control_panel")]
+[node name="PaceButton" type="Button" parent="CanvasLayer/Presets/Panel/MarginContainer/VBoxContainer" node_paths=PackedStringArray("control_panel")]
 layout_mode = 2
 text = "Pace"
 script = ExtResource("7_1iott")
@@ -485,9 +485,9 @@ left_right_phase_offset = 3.142
 step_height = 0.2
 step_length = 0.3
 swing_stance_bias = -2.7
-control_panel = NodePath("../../../../../Control/Panel")
+control_panel = NodePath("../../../../../Sliders/Panel")
 
-[node name="BoundButton" type="Button" parent="CanvasLayer/Control2/Panel/MarginContainer/VBoxContainer" node_paths=PackedStringArray("control_panel")]
+[node name="BoundButton" type="Button" parent="CanvasLayer/Presets/Panel/MarginContainer/VBoxContainer" node_paths=PackedStringArray("control_panel")]
 layout_mode = 2
 text = "Bound
 "
@@ -498,9 +498,9 @@ left_right_phase_offset = 0.0
 step_height = 0.28
 step_length = 0.47
 swing_stance_bias = -1.6
-control_panel = NodePath("../../../../../Control/Panel")
+control_panel = NodePath("../../../../../Sliders/Panel")
 
-[node name="GallopButton" type="Button" parent="CanvasLayer/Control2/Panel/MarginContainer/VBoxContainer" node_paths=PackedStringArray("control_panel")]
+[node name="GallopButton" type="Button" parent="CanvasLayer/Presets/Panel/MarginContainer/VBoxContainer" node_paths=PackedStringArray("control_panel")]
 layout_mode = 2
 text = "Gallop
 "
@@ -511,4 +511,4 @@ left_right_phase_offset = 0.6
 step_height = 0.355
 step_length = 0.43
 swing_stance_bias = -3.0
-control_panel = NodePath("../../../../../Control/Panel")
+control_panel = NodePath("../../../../../Sliders/Panel")
