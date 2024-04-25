@@ -25,7 +25,9 @@ var tibia: Node3D = null
 var metatarsal: Node3D = null
 var toe: Node3D = null
 
-func _init(blueprint: LegBlueprint, phase_offset: float):
+var material: Material = null
+
+func _init(blueprint: LegBlueprint, phase_offset: float, material: Material = null):
 	# copy values from blueprint
 	femur_length = blueprint.femur_length
 	tibia_length = blueprint.tibia_length
@@ -33,6 +35,8 @@ func _init(blueprint: LegBlueprint, phase_offset: float):
 	toe_length = blueprint.toe_length
 	ankle_lift = blueprint.ankle_lift
 	leg_type = blueprint.leg_type
+	
+	self.material = material
 	
 	if oscillator == null:
 		oscillator = Oscillator.new(blueprint.speed, phase_offset)
@@ -77,6 +81,7 @@ func make_segment(segment_length: float):
 	mesh.mesh = CapsuleMesh.new()
 	mesh.mesh.height = segment_length
 	mesh.mesh.radius = 0.015
+	mesh.material_override = self.material
 	
 	var segment = Node3D.new()
 	segment.add_child(mesh)

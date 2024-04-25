@@ -1,6 +1,7 @@
 class_name Creature extends Node3D
 
 @export var blueprint: CreatureBlueprint = null
+@export var material: Material = null
 
 var body_segments: Array[BodySegment] = []
 
@@ -18,7 +19,7 @@ func _enter_tree():
 		var length = max(0, (blueprint.body_length / blueprint.num_body_segments) - radius)
 		var z_offset = relative_pos * blueprint.body_length
 		
-		var bs = BodySegment.new(radius, length, z_offset)
+		var bs = BodySegment.new(radius, length, z_offset, material)
 		bs.name = "BodySegment" + str(i)
 		add_child(bs)
 		body_segments.append(bs)

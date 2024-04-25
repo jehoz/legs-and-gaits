@@ -8,19 +8,21 @@ var leg_r: Leg = null
 
 var resting_height: float = 0
 var z_offset: float = 0
+var material: Material = null
 
-func _init(radius: float, length: float, z_offset: float):
+func _init(radius: float, length: float, z_offset: float, material: Material = null):
 	self.radius = radius
 	self.length = length
 	self.z_offset = z_offset
+	self.material = material
 
 func set_legs(leg_blueprint: LegBlueprint, phase_offset: float):
 	if leg_l == null:  # assume that if one leg is exists, both exist
-		leg_l = Leg.new(leg_blueprint, phase_offset)
+		leg_l = Leg.new(leg_blueprint, phase_offset, material)
 		leg_l.name = "Leg L"
 		add_child(leg_l)
 		
-		leg_r = Leg.new(leg_blueprint, phase_offset + leg_blueprint.side_phase_difference)
+		leg_r = Leg.new(leg_blueprint, phase_offset + leg_blueprint.side_phase_difference, material)
 		leg_r.name = "Leg R"
 		add_child(leg_r)
 		
@@ -37,6 +39,7 @@ func _ready():
 	mesh.mesh = CapsuleMesh.new()
 	mesh.mesh.radius = radius
 	mesh.mesh.height = length + (2 * radius)
+	mesh.material_overlay = self.material
 	add_child(mesh)
 	mesh.rotate(Vector3.LEFT, PI/2)
 	
