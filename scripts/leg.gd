@@ -150,20 +150,22 @@ func solve_ik():
 	var forward = -global_basis.z
 	var left = global_basis.x
 	
-	# position of joint between toe and metatarsal is offset from foot target
-	# depending on how high the heel is raised
-	# for fully plantigrade feet the target is the heel of the foot, for fully
-	# ungiligrade feet the target is the ball of the foot
-	var ball_offset = (cos(ankle_lift) * metatarsal_length) * forward
-	var ball_pos = foot_target.global_position + ball_offset
+	var ball_pos = foot_target.global_position
 	
-	# foot rotates slightly as the leg moves forward and backward, modifying the
-	# final angle of heel elevation and the toe bone
-	var hip_to_ball = ball_pos - global_position # hip is leg's origin
+	# ankle lift increases as leg extends beyond resting length, and vice versa
+	var hip_to_ball = ball_pos - global_position
+	var current_length = hip_to_ball.length()
+	var _ankle_lift = ankle_lift * min(1, sqrt(current_length / resting_length()))
+	if current_length > resting_length():
+		_ankle_lift += (PI / 2 - ankle_lift) * pow((current_length - resting_length()) / (max_length() - resting_length()), 2)
+	
+	# ankle also rotates with the rest of the leg
 	var leg_xz = Vector2(hip_to_ball.x, hip_to_ball.z)
 	var fw_xz = Vector2(forward.x, forward.z)
 	var xz_len = leg_xz.length() * sign(fw_xz.dot(leg_xz))
-	var _ankle_lift = ankle_lift + atan(xz_len / hip_to_ball.y)
+	_ankle_lift += atan(xz_len / hip_to_ball.y)
+	
+	# make sure heel doesn't clip through ground
 	if ball_pos.y + metatarsal_length * sin(_ankle_lift) < 0:
 		_ankle_lift = asin(-ball_pos.y / metatarsal_length)
 	
