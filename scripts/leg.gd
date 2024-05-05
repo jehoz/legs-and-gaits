@@ -132,11 +132,11 @@ func min_length():
 
 func move_foot_target():
 	var forward = -global_basis.z
-	
 	var bottom = max(0, global_position.y - max_length())
+	var step_max = resting_length()
 	
-	foot_target.position = Vector3.FORWARD * oscillator.bias_slope(osc_horizontal_bias) * step_length
-	foot_target.global_position.y = bottom + max(0, oscillator.bias_peak(osc_vertical_bias, PI/2)) * step_height
+	foot_target.position = Vector3.FORWARD * oscillator.bias_slope(osc_horizontal_bias) * step_length * step_max
+	foot_target.global_position.y = bottom + max(0, oscillator.bias_peak(osc_vertical_bias, PI/2)) * step_height * step_max
 	
 	if foot_target.position.length() > max_length():
 		foot_target.position = foot_target.position.normalized() * max_length()
