@@ -141,7 +141,7 @@ func move_foot_target():
 	if foot_target.position.length() > max_length():
 		foot_target.position = foot_target.position.normalized() * max_length()
 	elif foot_target.position.length() < min_length():
-		foot_target.position = foot_target.position.normalized() * max_length()
+		foot_target.position = foot_target.position.normalized() * min_length()
 
 func is_planted():
 	return oscillator.bias_peak(osc_vertical_bias, PI/2) <= 0
