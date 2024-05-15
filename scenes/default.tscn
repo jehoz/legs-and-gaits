@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://coip7ho7vu6cf"]
+[gd_scene load_steps=18 format=3 uid="uid://coip7ho7vu6cf"]
 
 [ext_resource type="Script" path="res://scripts/creature.gd" id="1_e1xh8"]
 [ext_resource type="Script" path="res://scripts/blueprint/leg_blueprint.gd" id="2_sau8g"]
@@ -8,80 +8,87 @@
 [ext_resource type="Script" path="res://scripts/ui/leg_preset_button.gd" id="6_nay67"]
 [ext_resource type="Script" path="res://scripts/ui/gait_preset_button.gd" id="7_1iott"]
 
-[sub_resource type="Curve" id="Curve_ed4xn"]
+[sub_resource type="Curve" id="Curve_0s5ka"]
 max_value = 0.2
 _data = [Vector2(0, 0.101099), 0.0, 0.0, 0, 0, Vector2(0.691943, 0.120879), 0.0, 0.0, 0, 0, Vector2(1, 0.101099), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="Resource" id="Resource_vg5k8"]
+[sub_resource type="Resource" id="Resource_etv65"]
 script = ExtResource("2_sau8g")
-femur_length = 0.43
-tibia_length = 0.38
-metatarsal_length = 0.18
+femur_length = 0.413
+tibia_length = 0.431
+metatarsal_length = 0.212
 toe_length = 0.1
-ankle_lift = 1.4
+ankle_lift = 1.5
 leg_type = 0
-natural_bend = 0.1
+natural_bend = 0.24
 
-[sub_resource type="Resource" id="Resource_7scyc"]
+[sub_resource type="Resource" id="Resource_o2e4e"]
 script = ExtResource("2_sau8g")
-femur_length = 0.5
-tibia_length = 0.45
-metatarsal_length = 0.3
-toe_length = 0.2
-ankle_lift = 0.8
+femur_length = 0.461
+tibia_length = 0.452
+metatarsal_length = 0.285
+toe_length = 0.12
+ankle_lift = 0.996
 leg_type = 1
-natural_bend = 0.15
+natural_bend = 0.197
 
 [sub_resource type="Resource" id="Resource_0glcd"]
 script = ExtResource("4_kntse")
 body_length = 1.0
-body_shape = SubResource("Curve_ed4xn")
+body_shape = SubResource("Curve_0s5ka")
 num_body_segments = 12
-front_leg_blueprint = SubResource("Resource_vg5k8")
-rear_leg_blueprint = SubResource("Resource_7scyc")
-speed = 3.5
-leg_pair_phase_difference = 1.5708
+front_leg_blueprint = SubResource("Resource_etv65")
+rear_leg_blueprint = SubResource("Resource_o2e4e")
+speed = 3.75
+leg_pair_phase_difference = 1.5
 leg_side_phase_difference = 3.14159
-step_height = 0.125
-step_length = 0.25
+step_height = 0.2
+step_length = 0.3
 oscillator_bias = 1.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dcppm"]
-albedo_color = Color(0.160784, 0.101961, 0.0705882, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xca50"]
+albedo_color = Color(0.862745, 0.862745, 0.862745, 1)
+metallic = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fvigv"]
+albedo_color = Color(0.0862745, 0.219608, 0.129412, 1)
 
 [sub_resource type="QuadMesh" id="QuadMesh_kebb5"]
-size = Vector2(10, 10)
+size = Vector2(50, 50)
 orientation = 1
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_5udmt"]
 panorama = ExtResource("5_8pggb")
 
-[sub_resource type="Sky" id="Sky_1dely"]
+[sub_resource type="Sky" id="Sky_qwvaw"]
 sky_material = SubResource("PanoramaSkyMaterial_5udmt")
 
 [sub_resource type="Environment" id="Environment_6qart"]
 background_mode = 2
-sky = SubResource("Sky_1dely")
+sky = SubResource("Sky_qwvaw")
 ambient_light_source = 2
 ambient_light_color = Color(0.396078, 0.396078, 0.396078, 1)
 ambient_light_energy = 2.0
 tonemap_mode = 3
 tonemap_exposure = 1.2
 tonemap_white = 16.0
+ssao_radius = 10.42
 
 [node name="Default" type="Node3D"]
 
 [node name="Creature" type="Node3D" parent="."]
-transform = Transform3D(-0.919821, 0, -0.392337, 0, 1, 0, 0.392337, 0, -0.919821, 0, 0, 0)
+transform = Transform3D(-1, 0, 8.74227e-08, 0, 1, 0, -8.74227e-08, 0, -1, 0, 0, 0)
 script = ExtResource("1_e1xh8")
 blueprint = SubResource("Resource_0glcd")
+material = SubResource("StandardMaterial3D_xca50")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -1, 0.5, 1)
+transform = Transform3D(0.5, 0, -0.866026, 0, 1, 0, 0.866026, 0, 0.5, -1.1, 0.5, 0.55)
 
 [node name="Ground" type="MeshInstance3D" parent="."]
-material_override = SubResource("StandardMaterial3D_dcppm")
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_fvigv")
 mesh = SubResource("QuadMesh_kebb5")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -91,6 +98,7 @@ environment = SubResource("Environment_6qart")
 transform = Transform3D(-0.918031, 0.202607, -0.340837, -0.392504, -0.586225, 0.708718, -0.0562163, 0.784405, 0.617697, 0.482797, 5.92837, 2.46534)
 light_energy = 2.0
 shadow_enabled = true
+shadow_opacity = 0.6
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -456,10 +464,11 @@ layout_mode = 2
 text = "Walk
 "
 script = ExtResource("7_1iott")
-gait_speed = 5.0
+gait_speed = 3.75
 front_back_phase_offset = 1.5
 left_right_phase_offset = 3.14
-step_height = 0.125
+step_height = 0.2
+step_length = 0.3
 swing_stance_bias = 1.0
 control_panel = NodePath("../../../../../Sliders/Panel")
 
@@ -470,21 +479,19 @@ script = ExtResource("7_1iott")
 gait_speed = 7.0
 front_back_phase_offset = 3.142
 left_right_phase_offset = 3.142
-step_height = 0.2
-step_length = 0.3
-swing_stance_bias = -3.7
+step_length = 0.35
+swing_stance_bias = -3.0
 control_panel = NodePath("../../../../../Sliders/Panel")
 
 [node name="PaceButton" type="Button" parent="CanvasLayer/Presets/Panel/MarginContainer/VBoxContainer" node_paths=PackedStringArray("control_panel")]
 layout_mode = 2
 text = "Pace"
 script = ExtResource("7_1iott")
-gait_speed = 8.0
+gait_speed = 7.0
 front_back_phase_offset = 0.0
 left_right_phase_offset = 3.142
-step_height = 0.2
-step_length = 0.3
-swing_stance_bias = -2.7
+step_length = 0.35
+swing_stance_bias = -3.0
 control_panel = NodePath("../../../../../Sliders/Panel")
 
 [node name="BoundButton" type="Button" parent="CanvasLayer/Presets/Panel/MarginContainer/VBoxContainer" node_paths=PackedStringArray("control_panel")]
@@ -495,7 +502,7 @@ script = ExtResource("7_1iott")
 gait_speed = 11.0
 front_back_phase_offset = 3.142
 left_right_phase_offset = 0.0
-step_height = 0.28
+step_height = 0.4
 step_length = 0.47
 swing_stance_bias = -1.6
 control_panel = NodePath("../../../../../Sliders/Panel")
@@ -508,7 +515,7 @@ script = ExtResource("7_1iott")
 gait_speed = 10.0
 front_back_phase_offset = 3.142
 left_right_phase_offset = 0.6
-step_height = 0.355
-step_length = 0.43
+step_height = 0.42
+step_length = 0.45
 swing_stance_bias = -3.0
 control_panel = NodePath("../../../../../Sliders/Panel")
