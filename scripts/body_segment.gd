@@ -30,7 +30,7 @@ func set_legs(leg_blueprint: LegBlueprint, phase_offset: float):
 		leg_l.update_from_blueprint(leg_blueprint, phase_offset)
 		leg_r.update_from_blueprint(leg_blueprint, phase_offset + leg_blueprint.side_phase_difference)
 
-	resting_height = leg_l.max_length() * (1 - clampf(leg_blueprint.natural_bend, 0, 1))
+	resting_height = leg_l.resting_length()
 	leg_l.position.x = -radius
 	leg_r.position.x = radius
 
@@ -55,7 +55,7 @@ func _process(delta):
 	var foot_diff = leg_l.foot_target.global_position - leg_r.foot_target.global_position
 	foot_diff = Vector2(foot_diff.x, foot_diff.z).normalized()
 	
-	var twist = atan2(foot_diff.y, foot_diff.x)
+	var twist = atan2(foot_diff.y * 0.5, foot_diff.x)
 	
 	var look_target = global_position + (-get_parent_node_3d().global_basis.z)
 	look_at(look_target, global_basis.y)
